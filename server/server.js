@@ -6,7 +6,7 @@ const { getDb, dbConnect } = require('./db')
 const app = express()
 
 
-app.use(cors({ origin: 'https://omarabouzeid95.github.io',
+app.use(cors({ origin: process.env.FRONTEND_URL,
     allowedHeaders: [
       'access-control-allow-origin',
       'authorization',

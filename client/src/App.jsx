@@ -39,7 +39,7 @@ function App() {
   async function activateServer(){
     // trying to fetch 3 times until the server is up and running
     for(let i = 0; i < 2; i++){
-      const res = await fetch('https://movieapp-rget.onrender.com/user/Omar')
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/Omar`)
       const status = res.status
       if(status === 200){
         // server is up --> set state and break of the loop
@@ -395,7 +395,7 @@ function App() {
         /**
          * fetching movie reviews from the DB
          */
-        fetch(`https://movieapp-rget.onrender.com/movies/${id}`)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/movies/${id}`)
         .then(res => res.json())
         .then(data => {
           if(data !== null){

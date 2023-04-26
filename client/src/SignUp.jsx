@@ -31,14 +31,14 @@ export default function SignUp(props){
             /**
              * Check if email already exists in the DB
              */
-            fetch(`https://movieapp-rget.onrender.com/user/${userInfo.email}`)
+            fetch(`${process.env.REACT_APP_SERVER_URL}/user/${userInfo.email}`)
             .then(res => res.json())
             .then(data => {
                 if (data === null){
                     /**
                      * Create new user by POST request
                      */
-                    fetch('https://movieapp-rget.onrender.com/signUp', {
+                    fetch(`${process.env.REACT_APP_SERVER_URL}/signUp`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

@@ -56,7 +56,7 @@ export default function MovieDetails(props){
         /**
          * find corresponding movie
          */
-        fetch(`https://movieapp-rget.onrender.com/movies/${movieId}`)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/movies/${movieId}`)
         .then(res => res.json())
         .then(data => {
 
@@ -67,7 +67,7 @@ export default function MovieDetails(props){
             reviews.splice(reviewIndex, 1)
             console.log(reviews)
             // patching the corresponding movie details
-            fetch('https://movieapp-rget.onrender.com/movies', {
+            fetch(`${process.env.REACT_APP_SERVER_URL}/movies`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -97,7 +97,7 @@ export default function MovieDetails(props){
             /**
              * Check if Movie with this ID has details stored in the DB, if so then PATCH request, else it's a POST request 
              */
-            fetch(`https://movieapp-rget.onrender.com/movies/${props.movieDetails.id}`)
+            fetch(`${process.env.REACT_APP_SERVER_URL}/movies/${props.movieDetails.id}`)
             .then(res => res.json())
             .then(getRequestData => {
                 if(getRequestData === null){
@@ -115,7 +115,7 @@ export default function MovieDetails(props){
                             comment: review.trim(' ')
                          }]
                     }
-                    fetch('https://movieapp-rget.onrender.com/movies', {
+                    fetch(`${process.env.REACT_APP_SERVER_URL}/movies`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -160,7 +160,7 @@ export default function MovieDetails(props){
                         },
                         id: getRequestData.movie_id
                     }
-                    fetch('https://movieapp-rget.onrender.com/movies', {
+                    fetch(`${process.env.REACT_APP_SERVER_URL}/movies`, {
                         method: "PATCH",
                         headers: {
                             "Content-Type": "application/json"

@@ -349,18 +349,11 @@ body {
 
 @media (max-width: 501px){
   .movie-container, .movie-poster, .movie-poster-dt {
-    width: 80px;
+    width: 90px;
     font-size: 0.7rem;
-  }
-  .movie-poster {
-    height: 120px;
   }
   .movie-container {
     margin: 0.25em 1em;
-  }
-  .movie-poster-dt {
-    width: 80px;
-    height: 120px;
   }
 }
 

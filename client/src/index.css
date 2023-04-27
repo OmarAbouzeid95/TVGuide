@@ -207,7 +207,9 @@ body {
 
 @media (max-width: 550px){
   .genre-header{
-    margin-left: 0.5em; 
+    margin-left: 0.85em;
+    font-size: 1.2rem;
+    margin-bottom: -0.75em;
   }
 }
 
@@ -456,6 +458,13 @@ body {
   left: 25%;
   right: 25%;
   height: 40%;
+}
+
+@media (max-width: 500px){
+  .popupWrapper {
+    left: 10%;
+    right: 10%;
+  }
 }
 
 /* Loader */

@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/TVGuide/static/css/main.badb1998.css",
+    "main.css": "/TVGuide/static/css/main.2e5caf2a.css",
     "main.js": "/TVGuide/static/js/main.71739e88.js",
     "static/media/rating-icon.png": "/TVGuide/static/media/rating-icon.f808ec0ab437f64b342c.png",
     "static/media/magnifying-glass-solid.svg": "/TVGuide/static/media/magnifying-glass-solid.cd761af2e6d53d07ac6129e7f885fa95.svg",
     "index.html": "/TVGuide/index.html",
-    "main.badb1998.css.map": "/TVGuide/static/css/main.badb1998.css.map",
+    "main.2e5caf2a.css.map": "/TVGuide/static/css/main.2e5caf2a.css.map",
     "main.71739e88.js.map": "/TVGuide/static/js/main.71739e88.js.map"
   },
   "entrypoints": [
-    "static/css/main.badb1998.css",
+    "static/css/main.2e5caf2a.css",
     "static/js/main.71739e88.js"
   ]
 }

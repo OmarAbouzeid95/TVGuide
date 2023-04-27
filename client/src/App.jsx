@@ -485,11 +485,10 @@ function App() {
                   <div className="popupWrapper">
                     <img className="close-icon" src={closeIcon} alt="close icon" onClick = {(e) => e.target.parentNode.parentNode.classList.add("hide")}></img>
                     <div className="loaderWrapper">
-                    <div class="loader">
-                      <div class="circle"></div>
-                      <div class="circle"></div>
-                      <div class="circle"></div>
-                      <div class="circle"></div>
+                    <div class="spinner">
+                      <span></span>
+                      <span></span>
+                      <span></span>
                     </div>
                       <p>Connecting to the Server and Database...</p>
                     </div>

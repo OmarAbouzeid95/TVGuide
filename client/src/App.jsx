@@ -37,8 +37,8 @@ function App() {
    * Async function to activate server
    */
   async function activateServer(){
-    // trying to fetch 3 times until the server is up and running
-    for(let i = 0; i < 2; i++){
+    // trying to fetch 4 times until the server is up and running
+    for(let i = 0; i < 4; i++){
       const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/Omar`)
       const status = res.status
       if(status === 200){

@@ -6,15 +6,7 @@ const { getDb, dbConnect } = require('./db')
 const app = express()
 
 
-app.use(cors({ origin: process.env.FRONTEND_URL,
-    allowedHeaders: [
-      'access-control-allow-origin',
-      'authorization',
-      'Pragma',
-      'contact',
-    ],
-    exposeHeaders: []
-  }))
+app.use(cors({ origin: process.env.FRONTEND_URL}))
 app.use(express.json())
 
 const port = process.env.PORT || 6900;

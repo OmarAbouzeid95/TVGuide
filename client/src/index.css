@@ -428,6 +428,10 @@ body {
   animation: popup 0.6s;
 }
 
+.popupContainer {
+  position: fixed;
+}
+
 @keyframes popup {
   0% {
     opacity: 0;

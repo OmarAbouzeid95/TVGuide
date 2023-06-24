@@ -6,9 +6,9 @@ import MovieDetails from './MovieDetails';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Profile from './Profile'
+import Loader from './Loader'
 import {apiKey, baseUrl, posterPath} from "./info.js"
 import defaultPoster from "./media/defaultPoster.png"
-import closeIcon from "./media/close-icon.png"
 import Caroussel from './Caroussel'
 
 function App() {
@@ -31,32 +31,9 @@ function App() {
   const [animationTv, setAnimationTv] = useState([])
   const [documentaryTv, setDocumentaryTv] = useState([])
   const [mysteryTv, setMysteryTv] = useState([])
-  const [serverConnection, setServerConnection] = useState(false)
-
-  /**
-   * Async function to activate server
-   */
-  async function activateServer(){
-    // trying to fetch 4 times until the server is up and running
-    for(let i = 0; i < 4; i++){
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/Omar`)
-      const status = res.status
-      if(status === 200){
-        // server is up --> set state and break of the loop
-        setServerConnection(true)
-        break
-      }
-    }
-  }
-
+  const [showLoader, setShowLoader] = useState(false)
 
   useEffect(() => {
-    /**
-     * Activating server by sending multiple requests when the page loads until one is resolved
-     */
-    if(!serverConnection){
-      activateServer()
-    }
     /*
     Fetching movies and tv by genre to display on the homepage
     */
@@ -65,80 +42,60 @@ function App() {
       fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=28`)
       .then(res => res.json())
       .then(data => {
-        console.log("Action genre");
-        console.log(data);
         setActionMovies(data.results);
       });
       // Comedy movies
       fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=35`)
       .then(res => res.json())
       .then(data => {
-        console.log("comedy genre");
-        console.log(data);
         setComedyMovies(data.results);
       });
       // Comedy Tv
       fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&with_genres=35`)
       .then(res => res.json())
       .then(data => {
-        console.log("comedy genre");
-        console.log(data);
         setComedyTv(data.results);
       });
       // Comedy Tv
       fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&with_genres=9648`)
       .then(res => res.json())
       .then(data => {
-        console.log("mystery genre");
-        console.log(data);
         setMysteryTv(data.results);
       });
       // Fantasy movies
       fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=14`)
       .then(res => res.json())
       .then(data => {
-        console.log("fantasy genre");
-        console.log(data);
         setFantasyMovies(data.results);
       });
       // Crime movies
       fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=80`)
       .then(res => res.json())
       .then(data => {
-        console.log("crime genre");
-        console.log(data);
         setCrimeMovies(data.results);
       });
       // Drama movies
       fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=18`)
       .then(res => res.json())
       .then(data => {
-        console.log("drama genre");
-        console.log(data);
         setDramaMovies(data.results);
       });
       // Drama Tv
       fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&with_genres=18`)
       .then(res => res.json())
       .then(data => {
-        console.log("drama genre");
-        console.log(data);
         setDramaTv(data.results);
       });
       // Animation TV
       fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&with_genres=16`)
       .then(res => res.json())
       .then(data => {
-        console.log("Animation genre");
-        console.log(data);
         setAnimationTv(data.results);
       });
       // Documentary TV
       fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&with_genres=99`)
       .then(res => res.json())
       .then(data => {
-        console.log("documentary genre");
-        console.log(data);
         setDocumentaryTv(data.results);
       });
       setLoadHomepage(false)
@@ -147,8 +104,6 @@ function App() {
       fetch(`${baseUrl}/trending/all/day?api_key=${apiKey}`)
       .then(res => res.json())
       .then(data => {
-        console.log("trending");
-        console.log(data);
         setMovies(data.results);
       });
         setCurrentSearch("Trending")
@@ -158,8 +113,6 @@ function App() {
       fetch(`${baseUrl}/${mode}/upcoming?api_key=${apiKey}&language=en-US`)
       .then(res => res.json())
       .then(data => {
-        console.log("upcoming");
-        console.log(data);
         setMovies(data.results);
       });
       setCurrentSearch("Upcoming")
@@ -169,8 +122,6 @@ function App() {
       fetch(`${baseUrl}/${mode}/top_rated?api_key=${apiKey}&language=en-US`)
       .then(res => res.json())
       .then(data => {
-        console.log("top rated");
-        console.log(data);
         setMovies(data.results);
       });
       setCurrentSearch("Top rated")
@@ -180,8 +131,6 @@ function App() {
       fetch(`${baseUrl}/${mode}/popular?api_key=${apiKey}&language=en-US`)
       .then(res => res.json())
       .then(data => {
-        console.log("popular");
-        console.log(data);
         setMovies(data.results);
         
       });
@@ -190,11 +139,9 @@ function App() {
       
     }
     else if(search !== ''){
-      console.log("in search")  
       fetch(`${baseUrl}/search/${mode}?api_key=${apiKey}&language=en-US&query=${search}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setMovies(data.results);
       });
       setCurrentSearch(search)
@@ -205,11 +152,10 @@ function App() {
       fetch(`${baseUrl}/${mode}/${movieDetails.id}/credits?api_key=${apiKey}&language=en-US`)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         setMovieDetails({...movieDetails, cast: data.cast, active: false, visible: true})
       })
     }
-  }, [search, movieDetails, mode, currentPage, currentSearch, loadHomepage, serverConnection])
+  }, [search, movieDetails, mode, currentPage, currentSearch, loadHomepage])
 
     const allMovies = movies.map(movie => {
       if (currentSearch === 'Trending'){
@@ -375,8 +321,8 @@ function App() {
     }
 
     function getMovieCast(id, movieList){
-      console.log(id)
-      console.log(movieList)
+
+      setShowLoader(true)
       let videoPath = ''
       let reviews = []
       let dbRating = 0.0
@@ -399,7 +345,6 @@ function App() {
         .then(res => res.json())
         .then(data => {
           if(data !== null){
-            console.log(data)
             reviews = data.reviews
             dbRating = data.rating
             dbRatingCount = data.ratingCount
@@ -440,20 +385,22 @@ function App() {
           for(let i = 0; i< moviesArray.length; i++){
             if (id === moviesArray[i].id){
               setMovieDetails({
-                active: true,
-                title: moviesArray[i].title !== undefined ? moviesArray[i].title : moviesArray[i].name,
-                poster: moviesArray[i].poster_path === null ? defaultPoster : posterPath + moviesArray[i].poster_path,
-                description: moviesArray[i].overview,
-                date: moviesArray[i].release_date,
-                rating: moviesArray[i].vote_average.toFixed(1),
-                genres: moviesArray[i].genre_ids,
-                video: videoPath,
-                dbRating: dbRating.toFixed(1),
-                dbRatingCount: dbRatingCount,
-                dbRatingTotal: dbRatingTotal,
-                reviews: reviews,
-                id: id})
-                break
+                                active: true,
+                                title: moviesArray[i].title !== undefined ? moviesArray[i].title : moviesArray[i].name,
+                                poster: moviesArray[i].poster_path === null ? defaultPoster : posterPath + moviesArray[i].poster_path,
+                                description: moviesArray[i].overview,
+                                date: moviesArray[i].release_date,
+                                rating: moviesArray[i].vote_average.toFixed(1),
+                                genres: moviesArray[i].genre_ids,
+                                video: videoPath,
+                                dbRating: dbRating.toFixed(1),
+                                dbRatingCount: dbRatingCount,
+                                dbRatingTotal: dbRatingTotal,
+                                reviews: reviews,
+                                id: id
+                              })
+              setShowLoader(false)
+              break
             }
           }
         })        
@@ -481,19 +428,7 @@ function App() {
         mode = {mode}
         userData = {userData}
       />
-      {!serverConnection && <div className="popupContainer">
-                  <div className="popupWrapper">
-                    <img className="close-icon" src={closeIcon} alt="close icon" onClick = {(e) => e.target.parentNode.parentNode.classList.add("hide")}></img>
-                    <div className="loaderWrapper">
-                    <div class="spinner">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                      <p>Connecting to the Server and Database...</p>
-                    </div>
-                  </div>
-        </div>}
+      {showLoader && <Loader />}
       {movieDetails.visible && <MovieDetails
                                   hideDetails = {removeMovieDetails}
                                   movieDetails = {movieDetails}

@@ -1,9 +1,11 @@
 import {React, useState} from 'react'
+import Loader from './Loader'
 
 export default function SignIn(props){
     
     const [userInfo, setUserInfo] = useState({email: '', password: ''})
     const [signInStatus, setSignInStatus] = useState('')
+    const [showLoader, setShowLoader] = useState(false)
 
     // eslint-disable-next-line no-unused-vars
     function signIn(){
@@ -11,6 +13,7 @@ export default function SignIn(props){
          * POST request to make the password not visible in the URL 
          * check the server to see if this user exists
          */
+        setShowLoader(true)
         fetch(`${process.env.REACT_APP_SERVER_URL}/signIn`, {
             method: "POST",
             headers: {
@@ -22,9 +25,11 @@ export default function SignIn(props){
             console.log(data)
             if (!data) {
                 setSignInStatus('failed')
+                setShowLoader(false)
             } else {
                 // signed in successfully
                 props.updateUserData(data)
+                setShowLoader(false)
                 setTimeout(() => {
                     props.updateCurrentPage('homepage')
                 }, 2000)
@@ -35,23 +40,24 @@ export default function SignIn(props){
 
     return (
         <div className="form-box">
-        <form className="form">
-            <span className="subtitle">Sign in with your email.</span>
-            {((signInStatus !== '') && (signInStatus !== 'success')) && <p className="signIn-failed">Email or password are incorrect.</p>}
-            {(signInStatus === 'success') && <p className="signIn-successful">Successfully Signed in!</p>}
-            <div className="form-container">
-                    <input type="email" className="input" required placeholder="Email" onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
-                    <input type="password" className="input" required placeholder="Password" onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}></input>
+
+            {!showLoader && <Loader />}
+            <form className="form">
+                <span className="subtitle">Sign in with your email.</span>
+                {((signInStatus !== '') && (signInStatus !== 'success')) && <p className="signIn-failed">Email or password are incorrect.</p>}
+                {(signInStatus === 'success') && <p className="signIn-successful">Successfully Signed in!</p>}
+                <div className="form-container">
+                        <input type="email" className="input" required placeholder="Email" onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
+                        <input type="password" className="input" required placeholder="Password" onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}></input>
+                </div>
+                <button onClick={(e) => {
+                    e.preventDefault()
+                    signIn()
+                    }}>Sign in</button>
+            </form>
+            <div className="form-section">
+                <p>Don't have an account? <span className="signUp-btn" onClick={() => props.updateCurrentPage("signUp")}>Sign up</span></p>
             </div>
-            <button onClick={(e) => {
-                e.preventDefault()
-                signIn()
-                }}>Sign in</button>
-        </form>
-        <div className="form-section">
-            <p>Don't have an account? <span className="signUp-btn" onClick={() => props.updateCurrentPage("signUp")}>Sign up</span></p>
-        </div>
-        
     </div>
     )
 }

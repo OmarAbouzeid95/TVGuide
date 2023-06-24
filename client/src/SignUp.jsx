@@ -1,14 +1,17 @@
 import {React, useState} from 'react'
+import Loader from './Loader'
 
 export default function SignUp(props){
     
     const [userInfo, setUserInfo] = useState({firstName: '', lastName: '', email: '', password: '', repassword: ''})
     const [signUpStatus, setSignUpStatus] = useState('')
+    const [showLoader, setShowLoader] = useState(false)
 
     function signUp(){
         /**
          * some validations for the signup
          */
+        setShowLoader(true)
         const isAlpha = str => /^[a-zA-Z]*$/.test(str);
         const isPassword = str => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(str)
         if (!isAlpha(userInfo.firstName) || userInfo.firstName.trim(' ') === ''){
@@ -52,13 +55,16 @@ export default function SignUp(props){
                                 props.updateCurrentPage('signIn')
                             }, 2000)
                             setSignUpStatus('success')
+                            setShowLoader(false)
                         }else {
                             setSignUpStatus('Failed to sign up.')
+                            setShowLoader(false)
                         }
                     })
                 }
                 else {
                     setSignUpStatus('This email is already in use.')
+                    setShowLoader(false)
                 }
             })
             
@@ -67,26 +73,28 @@ export default function SignUp(props){
 
     return (
         <div className="form-box">
-                <form className="form">
-                    <span className="subtitle">Create a free account with your email.</span>
-                    {((signUpStatus !== '') && (signUpStatus !== 'success')) && <p className="signUp-failed">{signUpStatus}</p>}
-                    {(signUpStatus === 'success') && <p className="signUp-successful">Successfully Signed up!</p>}
-                    <div className="form-container">
-                            <input type="text" className="input" required placeholder="First Name" onChange={(e) => setUserInfo({...userInfo, firstName: e.target.value})}></input>
-                            <input type="text" className="input" required placeholder="Last Name" onChange={(e) => setUserInfo({...userInfo, lastName: e.target.value})}></input>
-                            <input type="email" className="input" required placeholder="Email" onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
-                            <input type="password" className="input" required placeholder="Password" onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}></input>
-                            <input type="password" className="input" required placeholder="Re-enter Password" onChange={(e) => setUserInfo({...userInfo, repassword: e.target.value})}></input>
-                    </div>
-                    <button onClick={(e) => {
-                        e.preventDefault()
-                        signUp()
-                        }}>Sign up</button>
-                </form>
-                <div className="form-section">
-                    <p>Have an account? <span className="signIn-btn" onClick={() => props.updateCurrentPage("signIn")}>Sign in</span></p>
+
+            {showLoader && <Loader />}
+            <form className="form">
+                <span className="subtitle">Create a free account with your email.</span>
+                {((signUpStatus !== '') && (signUpStatus !== 'success')) && <p className="signUp-failed">{signUpStatus}</p>}
+                {(signUpStatus === 'success') && <p className="signUp-successful">Successfully Signed up!</p>}
+                <div className="form-container">
+                        <input type="text" className="input" required placeholder="First Name" onChange={(e) => setUserInfo({...userInfo, firstName: e.target.value})}></input>
+                        <input type="text" className="input" required placeholder="Last Name" onChange={(e) => setUserInfo({...userInfo, lastName: e.target.value})}></input>
+                        <input type="email" className="input" required placeholder="Email" onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
+                        <input type="password" className="input" required placeholder="Password" onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}></input>
+                        <input type="password" className="input" required placeholder="Re-enter Password" onChange={(e) => setUserInfo({...userInfo, repassword: e.target.value})}></input>
                 </div>
-                
+                <button onClick={(e) => {
+                    e.preventDefault()
+                    signUp()
+                    }}>Sign up</button>
+            </form>
+            <div className="form-section">
+                <p>Have an account? <span className="signIn-btn" onClick={() => props.updateCurrentPage("signIn")}>Sign in</span></p>
+            </div>
+            
             </div> 
             )
         }

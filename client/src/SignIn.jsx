@@ -41,7 +41,7 @@ export default function SignIn(props){
     return (
         <div className="form-box">
 
-            {!showLoader && <Loader />}
+            {showLoader && <Loader />}
             <form className="form">
                 <span className="subtitle">Sign in with your email.</span>
                 {((signInStatus !== '') && (signInStatus !== 'success')) && <p className="signIn-failed">Email or password are incorrect.</p>}

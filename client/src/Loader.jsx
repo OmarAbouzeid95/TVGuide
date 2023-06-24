@@ -1,5 +1,5 @@
 
-function Loader() {
+function Loader({message}) {
     return ( 
         <div className="popupContainer">
             <div className="loaderWrapper">
@@ -9,6 +9,7 @@ function Loader() {
                     <span></span>
                 </div>
             </div>
+            <p>{message}</p>
         </div>
     );
 }

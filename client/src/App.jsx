@@ -428,7 +428,7 @@ function App() {
         mode = {mode}
         userData = {userData}
       />
-      {showLoader && <Loader />}
+      {showLoader && <Loader message="Loading reviews and ratings from the database..."/>}
       {movieDetails.visible && <MovieDetails
                                   hideDetails = {removeMovieDetails}
                                   movieDetails = {movieDetails}

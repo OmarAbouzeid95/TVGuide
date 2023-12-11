@@ -1,17 +1,30 @@
 import React from "react"
-import hamburgerIcon from "./media/hamburger-icon.png"
-import closeIcon from "./media/close-icon.png"
-import magnifyingGlass from "./media/magnifying-glass-solid.svg"
-import logo from "./media/logo.png"
+import hamburgerIcon from "../media/hamburger-icon.png"
+import closeIcon from "../media/close-icon.png"
+import magnifyingGlass from "../media/magnifying-glass-solid.svg"
+import logo from "../media/logo.png"
+
+import { useContext, useState, useEffect } from 'react';
+import { modeContext, userContext } from "../contexts/contexts";
+import { searchMovies } from "../functions/headerFunctions";
+import { Link } from "react-router-dom";
 
 export default function Header(props){
 
-    const [text, setText] = React.useState("")
-    const [width, setWidth] = React.useState(window.innerWidth)
-    const [headerData, setHeaderData] = React.useState(null)
-    const [navShow, setNavShow] = React.useState(false)
+    const [text, setText] = useState("")
+    const [width, setWidth] = useState(window.innerWidth)
+    const [headerData, setHeaderData] = useState(null)
+    const [navShow, setNavShow] = useState(false)
+    // contexts
+    const { mode, setMode } = useContext(modeContext);
+    const { userData } = useContext(userContext);
 
-    React.useEffect(()=> {
+    // toggles mode between movie / tv
+    const toggleMode = () => {
+        setMode((mode === 'movie') ? 'tv' : 'movie');
+    }
+
+    useEffect(()=> {
 
         function toggleNavShow(){
             setNavShow(prevNavShow => !prevNavShow)
@@ -30,23 +43,23 @@ export default function Header(props){
                     props.updateCurrentPage('topRated')
                     toggleNavShow()
                 }}>Top Rated</button>
-                {(props.mode === 'movie') && <button className="mobile-nav-btn" onClick = {()=> {
+                {(mode === 'movie') && <button className="mobile-nav-btn" onClick = {()=> {
                     props.updateCurrentPage('upcoming')
                     toggleNavShow()
                 }}>Upcoming</button>}
-                {(props.mode === 'tv') && <button className="mobile-nav-btn" onClick = {()=> {
+                {(mode === 'tv') && <button className="mobile-nav-btn" onClick = {()=> {
                     props.updateCurrentPage('trending')
                     toggleNavShow()
                 }}>Trending</button>}
                 <button className="mobile-nav-btn" onClick = {()=> {
-                    props.toggleMode()
+                    toggleMode()
                     props.updateCurrentPage('homepage')
                     toggleNavShow()
-                }}>{props.mode === 'movie' ? "TV" : "Movies"}</button>
+                }}>{mode === 'movie' ? "TV" : "Movies"}</button>
             <button className="mobile-nav-btn" onClick={() => {
-                (props.userData === null) ? props.updateCurrentPage('signIn') : props.updateCurrentPage('profile')
+                (userData === null) ? props.updateCurrentPage('signIn') : props.updateCurrentPage('profile')
                 toggleNavShow()
-            }}>{(props.userData === null) ? "Sign in" : props.userData.firstName + ' ' + props.userData.lastName}</button>
+            }}>{(userData) ? `Hi, ${userData.firstName}` : "Sign in"}</button>
             </div>
         </div>)
         }else {
@@ -54,9 +67,6 @@ export default function Header(props){
         }
     },[width, navShow, props, text])
 
-    function handleChange(e) {
-        setText(e.target.value)
-    }
     
 
     return (
@@ -67,31 +77,31 @@ export default function Header(props){
                     <h2>TV Guide</h2>
                 </div>
                 <div className="header-nav-buttons">
-                    <button className="header-nav-button" onClick = {()=> props.updateCurrentPage('popular')}>Popular</button>
-                    <button className="header-nav-button" onClick = {()=> props.updateCurrentPage('topRated')}>Top rated</button>
-                    {(props.mode === 'movie') && <button className="header-nav-button" onClick = {()=> props.updateCurrentPage('upcoming')}>Upcoming</button>}
-                    {(props.mode === 'tv') && <button className="header-nav-button" onClick = {()=> props.updateCurrentPage('trending')}>Trending</button>}
+                    <Link className="header-nav-button" to={`${mode}/popular`}>Popular</Link>
+                    <Link className="header-nav-button" to={`${mode}/top-rated`}>Top Rated</Link>
+                    {(mode === 'movie')} && <Link className="header-nav-button" to={`${mode}/upcoming`}>Upcoming</Link>
+                    {(mode === 'tv')} && <Link className="header-nav-button" to={`${mode}/trending`}>Trending</Link>
                     <button className="header-nav-button" onClick = {()=> {
-                        props.toggleMode()
+                        toggleMode()
                         props.updateCurrentPage('homepage')
-                    }}>{props.mode === 'movie' ? "TV" : "Movies"}</button>
-                    <button className="header-nav-button" onClick={() => {(props.userData === null) ? props.updateCurrentPage('signIn') : props.updateCurrentPage('profile')}}>
-                        {(props.userData === null) ? "Sign in" : props.userData.firstName + ' ' + props.userData.lastName}
+                    }}>{mode === 'movie' ? "TV" : "Movies"}</button>
+                    <button className="header-nav-button" onClick={() => {(userData === null) ? props.updateCurrentPage('signIn') : props.updateCurrentPage('profile')}}>
+                        {(userData) ? `Hi, ${userData.firstName}` : "Sign in"}
                     </button>
                 </div>
                 {headerData}
             </div>
             <div className="header-search-container">
                 <div className="header-searchbar-container">
-                    <input className="header-search-bar" type="text" onChange={handleChange} value={text}
+                    <input className="header-search-bar" type="text" onChange={(e) => setText(e.target.value)} value={text}
                         onKeyDown={(e) => { if(e.key === 'Enter'){
-                            props.search(text)
+                            searchMovies(text, mode)
                             if (e.repeat)
                                 return
                         }}}/>
                     <div className="searchbar-icons">
                         {text !== "" && <img className="clear-icon" src={closeIcon} alt="clear icon" onClick={() => setText("")}></img>}
-                        <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => props.search(text)}/>
+                        <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => searchMovies(text, mode)}/>
                     </div>
                 </div>
             </div>

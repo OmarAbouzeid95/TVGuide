@@ -1,15 +1,15 @@
 import {useState} from "react"
 import Cast from "./Cast"
-import { posterPath, movieGenres } from "./info"
-import unknownUser from "./media/unknownUser.jpeg"
-import closeIcon from "./media/close-icon.png"
-import ratingIcon from "./media//rating-icon.png"
-import logo from "./media/logo.png"
-import send from "./media/send.png"
+import { posterPath, movieGenres } from "../info"
+import unknownUser from "../media/unknownUser.jpeg"
+import closeIcon from "../media/close-icon.png"
+import ratingIcon from "../media//rating-icon.png"
+import logo from "../media/logo.png"
+import send from "../media/send.png"
 import Review from './Review'
-import filledStar from "./media/star-filled.png"
-import unfilledStar from "./media/star-unfilled.png"
-import deleteIcon from "./media/delete.png"
+import filledStar from "../media/star-filled.png"
+import unfilledStar from "../media/star-unfilled.png"
+import deleteIcon from "../media/delete.png"
 
 
 

@@ -1,5 +1,5 @@
 import React from "react"
-import moreInfo from "./media/more-info.png"
+import moreInfo from "../media/more-info.png"
 
 export default function Movie(props){
     const [style, setStyle] = React.useState("hide")

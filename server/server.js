@@ -18,7 +18,6 @@ let db
 dbConnect((error) => {
     if (!error) {
         db = getDb()
-        console.log(db)
     }
 })
 

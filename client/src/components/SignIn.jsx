@@ -1,11 +1,16 @@
-import {React, useState} from 'react'
+import { React, useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { userContext } from '../contexts/contexts'
 import Loader from './Loader'
 
-export default function SignIn(props){
+export default function SignIn(){
     
-    const [userInfo, setUserInfo] = useState({email: '', password: ''})
-    const [signInStatus, setSignInStatus] = useState('')
-    const [showLoader, setShowLoader] = useState(false)
+    const [userInfo, setUserInfo] = useState({email: '', password: ''});
+    const [signInStatus, setSignInStatus] = useState('');
+    const [showLoader, setShowLoader] = useState(false);
+    const navigation = useNavigate();
+
+    const { setUserData } = useContext(userContext);
 
     // eslint-disable-next-line no-unused-vars
     function signIn(){
@@ -28,10 +33,10 @@ export default function SignIn(props){
                 setShowLoader(false)
             } else {
                 // signed in successfully
-                props.updateUserData(data)
+                setUserData(data)
                 setShowLoader(false)
                 setTimeout(() => {
-                    props.updateCurrentPage('homepage')
+                    navigation('/')
                 }, 2000)
                 setSignInStatus('success')
             }
@@ -56,7 +61,7 @@ export default function SignIn(props){
                     }}>Sign in</button>
             </form>
             <div className="form-section">
-                <p>Don't have an account? <span className="signUp-btn" onClick={() => props.updateCurrentPage("signUp")}>Sign up</span></p>
+                <p>Don't have an account? <Link to={'/signup'}>Sign up</Link></p>
             </div>
     </div>
     )

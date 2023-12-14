@@ -3,15 +3,13 @@ import {useState, useEffect} from "react";
 import Header from '../components/Header';
 import Movie from '../components/Movie';
 import MovieDetails from '../components/MovieDetails';
-import SignIn from '../components/SignIn';
-import SignUp from '../components/SignUp';
-import Profile from '../components/Profile'
 import Loader from '../components/Loader'
 import {apiKey, baseUrl, posterPath} from "../info.js"
 import defaultPoster from "../media/defaultPoster.png"
 import Caroussel from '../components/Caroussel'
 
 import { modeContext, userContext } from '../contexts/contexts';
+import { Outlet } from 'react-router-dom';
 
 function Root() {
 
@@ -143,16 +141,6 @@ function Root() {
       setCurrentPage('display')    
       
     }
-    // else if(search !== ''){
-    //   fetch(`${baseUrl}/search/${mode}?api_key=${apiKey}&language=en-US&query=${search}`)
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     setMovies(data.results);
-    //   });
-    //   setCurrentSearch(search)
-    //   setSearch("")
-    //   setCurrentPage('display')    
-    // } 
     else if(movieDetails.active){
       fetch(`${baseUrl}/${mode}/${movieDetails.id}/credits?api_key=${apiKey}&language=en-US`)
       .then(res => res.json())
@@ -400,10 +388,6 @@ function Root() {
       setMovieDetails({active: false, id: null, visible: false})
     }
 
-    function updateUserData(user){
-      setUserData(user)
-    }
-
     function updateCurrentPage(curr){
       setCurrentPage(curr)
     }
@@ -415,6 +399,7 @@ function Root() {
       <Header 
         updateCurrentPage = {updateCurrentPage}
       />
+      <Outlet />
       {showLoader && <Loader message="Loading reviews and ratings from the database..."/>}
       {movieDetails.visible && <MovieDetails
                                   hideDetails = {removeMovieDetails}
@@ -450,24 +435,9 @@ function Root() {
         {(currentPage === 'homepage') && (mode === 'tv') && <h3 className="genre-header">Mystery</h3>}                               
         {(currentPage === 'homepage') && (mode === 'tv') && <Caroussel movieList = {mysteryTvList}/>}
 
-
-        {/* Movies and Tvs by type (trending, upcoming, top rated, search) */}
-        {(currentPage === 'display') && movies.length !== 0 && <h2 id="movies-found">{(currentSearch === 'Trending' || currentSearch === 'Upcoming' || currentSearch === 'Top rated' || currentSearch === 'Popular')
-                                                      ? `${currentSearch} ${mode === 'movie' ? 'Movies' : 'TV'}`
-                                                        :`Results for ${currentSearch}`}</h2>}
-        {(movies.length === 0) && (currentSearch !== "") && (currentPage === 'display') && <h2 id="no-movies">No results found for your search "{currentSearch}"</h2>}
         {(currentPage === 'display') && <div className="movies-container">
           {allMovies}
         </div>}
-        {/* Sign in, sign up and profile pages */}
-        {(currentPage === 'signIn') && <SignIn 
-                        updateCurrentPage = {updateCurrentPage}
-                        updateUserData = {updateUserData}/>}
-        {(currentPage === 'signUp') && <SignUp  updateCurrentPage = {updateCurrentPage}/>}
-        {(currentPage === 'profile') && <Profile 
-                                          updateUserData = {updateUserData}
-                                          updateCurrentPage = {updateCurrentPage}
-                                          userData = {userData}/>}
     </modeContext.Provider>
     </userContext.Provider>
     </div>

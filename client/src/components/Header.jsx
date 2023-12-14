@@ -6,7 +6,6 @@ import logo from "../media/logo.png"
 
 import { useContext, useState, useEffect } from 'react';
 import { modeContext, userContext } from "../contexts/contexts";
-import { searchMovies } from "../functions/headerFunctions";
 import { Link } from "react-router-dom";
 
 export default function Header(props){
@@ -95,14 +94,15 @@ export default function Header(props){
                 <div className="header-searchbar-container">
                     <input className="header-search-bar" type="text" onChange={(e) => setText(e.target.value)} value={text}
                         onKeyDown={(e) => { if(e.key === 'Enter'){
-                            searchMovies(text, mode)
+                            // searchMovies(text, mode) 
                             if (e.repeat)
                                 return
                         }}}/>
                     <div className="searchbar-icons">
                         {text !== "" && <img className="clear-icon" src={closeIcon} alt="clear icon" onClick={() => setText("")}></img>}
-                        <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => searchMovies(text, mode)}/>
+                        <Link to={`search/${mode}/${text}`}><img className="search-icon" src={magnifyingGlass} alt="search icon"/></Link>
                     </div>
+                    
                 </div>
             </div>
         </div>

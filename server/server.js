@@ -10,16 +10,19 @@ app.use(cors({ origin: process.env.FRONTEND_URL}))
 app.use(express.json())
 
 const port = process.env.PORT || 6900;
+let db
 app.listen(port, () => {
+    dbConnect((error) => {
+        if (!error) {
+            db = getDb()
+            console.log('db: ', db);
+        }
+    })
     console.log(`Now listening to port ${port}`)
 })
 
-let db
-dbConnect((error) => {
-    if (!error) {
-        db = getDb()
-    }
-})
+
+
 
 // Searching for email and password
 app.post('/signIn', (req, res) => {
@@ -44,7 +47,7 @@ app.post('/signUp', (req, res) => {
     db.collection('users')
         .insertOne(user)
         .then(() => {
-            res.status(200).json({ result: 'success' })
+            res.status(200).json(user)
         })
         .catch(error => {
             res.status(500).json({ error: "Couldn't add user to db" })

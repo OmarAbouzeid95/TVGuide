@@ -165,6 +165,7 @@ body {
   position: absolute;
   width: 18px;
   right: 10px;
+  bottom: 8px;
   filter: invert(99%) sepia(0%) saturate(3667%) hue-rotate(206deg)
     brightness(116%) contrast(97%);
 }
@@ -270,13 +271,26 @@ body {
   margin:0.45em;
 }
 
-.movies-container {
+/* .movies-container {
   width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   margin: 2em auto;
   background-color: #14161b;
+} */
+
+.movies-container {
+  max-width: 1360px;
+  margin: 4em auto;
+  display: flex;
+  /* justify-content: center; */
+  flex-wrap: wrap;
+  background-color: #14161b;
+}
+.movies-container-wrapper {
+  max-width: 1360px;
+  margin: 2em auto 0em auto;
 }
 
 .movie-container {
@@ -334,8 +348,15 @@ body {
 }
 
 @media (max-width: 575px){
+
+  .movies-container {
+    max-width: 420px;
+  }
+  .movies-container-wrapper {
+    max-width: 420px;
+  }
   .movie-container, .movie-poster, .movie-poster-dt {
-    width: 90px;
+    width: 110px;
     font-size: 0.7rem;
   }
   .movie-poster {
@@ -352,7 +373,7 @@ body {
 
 @media (max-width: 501px){
   .movie-container, .movie-poster, .movie-poster-dt {
-    width: 90px;
+    width: 110px;
     font-size: 0.7rem;
   }
   .movie-container {
@@ -873,17 +894,6 @@ fieldset {
   text-align: left;
 }
 
-#no-movies,
-#movies-found {
-  padding: 1.2em 2em;
-  font-size: 1.4rem;
-  color: white;
-  letter-spacing: 0.5px;
-}
-
-#no-movies {
-  padding-top: 4em;
-}
 
 .movie-name-span {
   display: block;
@@ -942,17 +952,27 @@ fieldset {
   transition: all 0.3s;
 }
 
+.error-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
 @media (max-width: 1120px) {
   .header-nav-buttons {
     width: 50%;
   }
-  /* .movies-container {
-    max-width: 980px;
-  } */
-
   .movies-container {
-    padding: 0;
+    max-width: 980px;
   }
+  .movies-container-wrapper {
+    max-width: 980px;
+  }
+  /* .movies-container {
+    padding: 0;
+  } */
 }
 
 @media (max-width: 935px) {
@@ -986,9 +1006,9 @@ fieldset {
   .movieDetails-title-img div {
     font-size: 0.9em;
   }
-  .movies-container {
+  /* .movies-container {
     padding: 0;
-  }
+  } */
 }
 
 @media (max-width: 700px) {

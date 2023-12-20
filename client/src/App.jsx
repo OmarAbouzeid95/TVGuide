@@ -1,10 +1,16 @@
 import './App.css';
+import { useContext } from 'react';
+// components
 import Root from './routes/Root';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
-import ErrorPage from './routes/ErrorPage';
+
+// mantine
+import { MantineProvider } from '@mantine/core';
 
 // routes
+import ErrorPage from './routes/ErrorPage';
+import TrendingPage from './routes/TrendingPage';
 import SearchPage from './routes/SearchPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -12,6 +18,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { searchMovies } from './functions/movieFunctions';
 
 const App = () => {
+
 
   const router = createBrowserRouter([
     {
@@ -36,6 +43,10 @@ const App = () => {
           }
         },
         {
+          path: '/trending',
+          element: <TrendingPage />
+        },
+        {
           path: '*',
           element: <ErrorPage />
         }
@@ -45,7 +56,9 @@ const App = () => {
 
   return (
     <div>
-      <RouterProvider router={router} />
+      <MantineProvider withGlobalStyles withNormalizeCSS>
+        <RouterProvider router={router} />
+      </MantineProvider>
     </div>
   );
   

@@ -12,6 +12,12 @@ export const searchMovies = async (mode, keyword) => {
     return { results, keyword };
 }
 
+export const fetchTrending = async () => {
+    const res = await fetch(`${baseUrl}/trending/all/day?api_key=${apiKey}`);
+    const data = await res.json();
+    return data.results;
+}
+
 
 export const mapMovies = (movies, movieList = 'all') => {
     return movies.map(movie => {

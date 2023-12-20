@@ -7,17 +7,18 @@ import Loader from '../components/Loader'
 import {apiKey, baseUrl, posterPath} from "../info.js"
 import defaultPoster from "../media/defaultPoster.png"
 import Caroussel from '../components/Caroussel'
+// import Footer from '../components/Footer';
 
-import { modeContext, userContext } from '../contexts/contexts';
+import { modeContext, userContext, entertainmentContext } from '../contexts/contexts';
 import { Outlet } from 'react-router-dom';
 
 function Root() {
 
-  const [movies, setMovies] = useState([]);
-  // const [search, setSearch] = useState("");
+  const [ movies, setMovies ] = useState([]);
   // contexts
-  const [mode, setMode] = useState('movie');
-  const [userData, setUserData] = useState(null);
+  const [ mode, setMode ] = useState('movie');
+  const [ userData, setUserData ] = useState();
+  const [ entertainmentData, setEntertainmentData ] = useState();
 
   const [currentSearch, setCurrentSearch] = useState("");
   const [movieDetails, setMovieDetails] = useState({active: false, id: null, visible: false});
@@ -395,6 +396,7 @@ function Root() {
   return (
     <div className= "app-container">
       <userContext.Provider value={{ userData, setUserData }}>
+      <entertainmentContext.Provider value={{ entertainmentData, setEntertainmentData }}>
       <modeContext.Provider value={{ mode, setMode }}>
       <Header 
         updateCurrentPage = {updateCurrentPage}
@@ -438,7 +440,9 @@ function Root() {
         {(currentPage === 'display') && <div className="movies-container">
           {allMovies}
         </div>}
+      {/* <Footer /> */}
     </modeContext.Provider>
+    </entertainmentContext.Provider>
     </userContext.Provider>
     </div>
   );

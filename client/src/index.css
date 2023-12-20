@@ -91,6 +91,7 @@ body {
   background-color: #0E1013;
   color: white;
   text-decoration: none;
+  font-size: 0.9rem;
   border: none;
   border-radius: 0.5em;
   cursor: pointer;
@@ -909,6 +910,8 @@ fieldset {
 .mobile-nav-btn {
   background: transparent;
   color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
   border: none;
   margin-top: 2em;
   font-weight: bold;

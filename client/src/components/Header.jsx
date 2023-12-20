@@ -24,7 +24,6 @@ export default function Header(props){
     }
 
     useEffect(()=> {
-
         function toggleNavShow(){
             setNavShow(prevNavShow => !prevNavShow)
         }
@@ -34,37 +33,21 @@ export default function Header(props){
             setHeaderData(<div className="mobile-nav-icon">
             <div className="hamburger-icon"><img  src={hamburgerIcon} alt="hamburger-icon" onClick = {toggleNavShow}></img></div>
             <div className = {`mobile-nav ${navShow ? "mobile-nav-show" : "mobile-nav-hide"}`}>
-                <button className="mobile-nav-btn" onClick = {()=> {
-                    props.updateCurrentPage('popular')
-                    toggleNavShow()
-                }}>Popular</button>
-                <button className="mobile-nav-btn" onClick = {()=> {
-                    props.updateCurrentPage('topRated')
-                    toggleNavShow()
-                }}>Top Rated</button>
-                {(mode === 'movie') && <button className="mobile-nav-btn" onClick = {()=> {
-                    props.updateCurrentPage('upcoming')
-                    toggleNavShow()
-                }}>Upcoming</button>}
-                {(mode === 'tv') && <button className="mobile-nav-btn" onClick = {()=> {
-                    props.updateCurrentPage('trending')
-                    toggleNavShow()
-                }}>Trending</button>}
+                <Link className="mobile-nav-btn" to={`${mode}/popular`} onClick={toggleNavShow}>Popular</Link>
+                <Link className="mobile-nav-btn" to={`${mode}/top-rated`} onClick={toggleNavShow}>Top Rated</Link>
+                <Link className="mobile-nav-btn" to={`${mode}/upcoming`} onClick={toggleNavShow}>Upcoming</Link>
+                <Link className="mobile-nav-btn" to={'/trending'} onClick={toggleNavShow}>Trending</Link>
+                <Link className="mobile-nav-btn" to={userData ? '/profile' : '/signin'} onClick={toggleNavShow}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
                 <button className="mobile-nav-btn" onClick = {()=> {
                     toggleMode()
-                    props.updateCurrentPage('homepage')
                     toggleNavShow()
-                }}>{mode === 'movie' ? "TV" : "Movies"}</button>
-            <button className="mobile-nav-btn" onClick={() => {
-                (userData === null) ? props.updateCurrentPage('signIn') : props.updateCurrentPage('profile')
-                toggleNavShow()
-            }}>{(userData) ? `Hi, ${userData.firstName}` : "Sign in"}</button>
+                }}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
             </div>
         </div>)
         }else {
             setHeaderData(null)
         }
-    },[width, navShow, props, text])
+    },[width, navShow, props, text]);
 
     
 
@@ -78,15 +61,10 @@ export default function Header(props){
                 <div className="header-nav-buttons">
                     <Link className="header-nav-button" to={`${mode}/popular`}>Popular</Link>
                     <Link className="header-nav-button" to={`${mode}/top-rated`}>Top Rated</Link>
-                    {(mode === 'movie')} && <Link className="header-nav-button" to={`${mode}/upcoming`}>Upcoming</Link>
-                    {(mode === 'tv')} && <Link className="header-nav-button" to={`${mode}/trending`}>Trending</Link>
-                    <button className="header-nav-button" onClick = {()=> {
-                        toggleMode()
-                        props.updateCurrentPage('homepage')
-                    }}>{mode === 'movie' ? "TV" : "Movies"}</button>
-                    <button className="header-nav-button" onClick={() => {(userData === null) ? props.updateCurrentPage('signIn') : props.updateCurrentPage('profile')}}>
-                        {(userData) ? `Hi, ${userData.firstName}` : "Sign in"}
-                    </button>
+                    <Link className="header-nav-button" to={`${mode}/upcoming`}>Upcoming</Link>
+                    <Link className="header-nav-button" to={'/trending'}>Trending</Link>
+                    <button className="header-nav-button" onClick = {toggleMode}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
+                    <Link className="header-nav-button" to={userData ? '/profile' : '/signin'}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
                 </div>
                 {headerData}
             </div>

@@ -18,7 +18,7 @@ function Root() {
   // contexts
   const [ mode, setMode ] = useState('movie');
   const [ userData, setUserData ] = useState();
-  const [ entertainmentData, setEntertainmentData ] = useState();
+  const [ entertainmentData, setEntertainmentData ] = useState({});
 
   const [currentSearch, setCurrentSearch] = useState("");
   const [movieDetails, setMovieDetails] = useState({active: false, id: null, visible: false});
@@ -104,44 +104,7 @@ function Root() {
       });
       setLoadHomepage(false)
     }
-    if(currentPage === 'trending'){
-      fetch(`${baseUrl}/trending/all/day?api_key=${apiKey}`)
-      .then(res => res.json())
-      .then(data => {
-        setMovies(data.results);
-      });
-        setCurrentSearch("Trending")
-        setCurrentPage('display')    
-      }
-    else if(currentPage === 'upcoming'){
-      fetch(`${baseUrl}/${mode}/upcoming?api_key=${apiKey}&language=en-US`)
-      .then(res => res.json())
-      .then(data => {
-        setMovies(data.results);
-      });
-      setCurrentSearch("Upcoming")
-      setCurrentPage('display')    
-    }
-    else if(currentPage === 'topRated'){
-      fetch(`${baseUrl}/${mode}/top_rated?api_key=${apiKey}&language=en-US`)
-      .then(res => res.json())
-      .then(data => {
-        setMovies(data.results);
-      });
-      setCurrentSearch("Top rated")
-      setCurrentPage('display')    
-    }
-    else if(currentPage === 'popular'){
-      fetch(`${baseUrl}/${mode}/popular?api_key=${apiKey}&language=en-US`)
-      .then(res => res.json())
-      .then(data => {
-        setMovies(data.results);
-        
-      });
-      setCurrentSearch("Popular")
-      setCurrentPage('display')    
-      
-    }
+
     else if(movieDetails.active){
       fetch(`${baseUrl}/${mode}/${movieDetails.id}/credits?api_key=${apiKey}&language=en-US`)
       .then(res => res.json())

@@ -1,5 +1,5 @@
 import './App.css';
-import { useContext } from 'react';
+
 // components
 import Root from './routes/Root';
 import SignIn from './components/SignIn';
@@ -11,7 +11,10 @@ import { MantineProvider } from '@mantine/core';
 // routes
 import ErrorPage from './routes/ErrorPage';
 import TrendingPage from './routes/TrendingPage';
+import PopularPage from './routes/PopularPage';
 import SearchPage from './routes/SearchPage';
+import TopRatedPage from './routes/TopRatedPage';
+import UpcomingPage from './routes/UpcomingPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // functions
@@ -45,6 +48,18 @@ const App = () => {
         {
           path: '/trending',
           element: <TrendingPage />
+        },
+        {
+          path: '/popular/:mode',
+          element: <PopularPage />
+        },
+        {
+          path: '/top-rated/:mode',
+          element: <TopRatedPage />
+        },
+        {
+          path: '/upcoming/:mode',
+          element: <UpcomingPage />
         },
         {
           path: '*',

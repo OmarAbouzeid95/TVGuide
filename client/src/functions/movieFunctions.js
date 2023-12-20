@@ -18,16 +18,34 @@ export const fetchTrending = async () => {
     return data.results;
 }
 
+export const fetchPopular = async (mode) => {
+    const res = await fetch(`${baseUrl}/${mode}/popular?api_key=${apiKey}&language=en-US`);
+    const data = await res.json();
+    return data.results;
+}
+
+export const fetchTopRated = async (mode) => {
+    const res = await fetch(`${baseUrl}/${mode}/top_rated?api_key=${apiKey}&language=en-US`);
+    const data = await res.json();
+    return data.results;
+}
+
+export const fetchUpcoming = async (mode) => {
+    const res = await fetch(`${baseUrl}/${mode}/upcoming?api_key=${apiKey}&language=en-US`);
+    const data = await res.json();
+    return data.results;
+}
+
 
 export const mapMovies = (movies, movieList = 'all') => {
     return movies.map(movie => {
         return <Movie 
-                    title = {movie.title ?? movie.name}
-                    poster = {!movie.poster_path ? defaultPoster : posterPath + movie.poster_path}
-                    id = {movie.id}
+                    title = {movie?.title ?? movie?.name}
+                    poster = {!movie?.poster_path ? defaultPoster : posterPath + movie?.poster_path}
+                    id = {movie?.id}
                     // getMovieCast = {getMovieCast}
-                    key = {movie.id}
-                    genres = {movie.genre_ids}
+                    key = {movie?.id}
+                    genres = {movie?.genre_ids}
                     movieList = {movieList}
                 />
     });

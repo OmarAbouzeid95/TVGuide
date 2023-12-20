@@ -33,9 +33,9 @@ export default function Header(props){
             setHeaderData(<div className="mobile-nav-icon">
             <div className="hamburger-icon"><img  src={hamburgerIcon} alt="hamburger-icon" onClick = {toggleNavShow}></img></div>
             <div className = {`mobile-nav ${navShow ? "mobile-nav-show" : "mobile-nav-hide"}`}>
-                <Link className="mobile-nav-btn" to={`${mode}/popular`} onClick={toggleNavShow}>Popular</Link>
-                <Link className="mobile-nav-btn" to={`${mode}/top-rated`} onClick={toggleNavShow}>Top Rated</Link>
-                <Link className="mobile-nav-btn" to={`${mode}/upcoming`} onClick={toggleNavShow}>Upcoming</Link>
+                <Link className="mobile-nav-btn" to={`/popular/${mode}`} onClick={toggleNavShow}>Popular</Link>
+                <Link className="mobile-nav-btn" to={`/top-rated/${mode}`} onClick={toggleNavShow}>Top Rated</Link>
+                {(mode === 'movie') && <Link className="mobile-nav-btn" to={`/upcoming/${mode}`} onClick={toggleNavShow}>Upcoming</Link>}
                 <Link className="mobile-nav-btn" to={'/trending'} onClick={toggleNavShow}>Trending</Link>
                 <Link className="mobile-nav-btn" to={userData ? '/profile' : '/signin'} onClick={toggleNavShow}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
                 <button className="mobile-nav-btn" onClick = {()=> {
@@ -59,9 +59,9 @@ export default function Header(props){
                     <h2>TV Guide</h2>
                 </div>
                 <div className="header-nav-buttons">
-                    <Link className="header-nav-button" to={`${mode}/popular`}>Popular</Link>
-                    <Link className="header-nav-button" to={`${mode}/top-rated`}>Top Rated</Link>
-                    <Link className="header-nav-button" to={`${mode}/upcoming`}>Upcoming</Link>
+                    <Link className="header-nav-button" to={`/popular/${mode}`}>Popular</Link>
+                    <Link className="header-nav-button" to={`/top-rated/${mode}`}>Top Rated</Link>
+                    {(mode === 'movie') && <Link className="header-nav-button" to={`/upcoming/${mode}`}>Upcoming</Link>}
                     <Link className="header-nav-button" to={'/trending'}>Trending</Link>
                     <button className="header-nav-button" onClick = {toggleMode}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
                     <Link className="header-nav-button" to={userData ? '/profile' : '/signin'}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>

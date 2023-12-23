@@ -4,6 +4,7 @@ import './App.css';
 import Root from './routes/Root';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import MovieDetails from './components/MovieDetails';
 
 // mantine
 import { MantineProvider } from '@mantine/core';
@@ -20,6 +21,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // functions
 import { searchMovies } from './functions/movieFunctions';
+import { fetchCast, fetchTrailer } from './functions/movieFunctions';
+import { fetchRatingAndComments } from './functions/dbFunctions';
 
 const App = () => {
 
@@ -46,7 +49,6 @@ const App = () => {
           element: <SearchPage />,
           loader: async ({params}) => {
             const { mode, keyword } = params;
-            console.log('mode: ', mode, ' keyword: ', keyword);
             return searchMovies(mode, keyword);
           }
         },
@@ -65,6 +67,18 @@ const App = () => {
         {
           path: '/upcoming/:mode',
           element: <UpcomingPage />
+        },
+        {
+          path: '/show-details/:mode/:title/:id',
+          element: <MovieDetails />,
+          loader: async ({params}) => {
+            const { mode, id } = params;
+            const cast = await fetchCast(mode, id);
+            const trailer = await fetchTrailer(mode, id);
+            // const { reviews, dbRating, dbRatingCount, dbRatingTotal } = await fetchRatingAndComments(id);
+            // return { cast, trailer, reviews, dbRating, dbRatingCount, dbRatingTotal };
+            return { cast, trailer };
+          }
         },
         {
           path: '*',

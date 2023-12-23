@@ -464,6 +464,7 @@ body {
   }
 }
 
+/* 
 .movieDetails-container, .popupWrapper {
   position: fixed;
   left: 10%;
@@ -479,6 +480,11 @@ body {
   background-color: var(--primary-color);
   overflow-y: scroll;
   color: white;
+} */
+
+.movieDetails-container {
+  color:white;
+  padding: 4em;
 }
 
 .popupWrapper{ 

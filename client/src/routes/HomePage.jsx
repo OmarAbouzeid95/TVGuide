@@ -132,13 +132,6 @@ const HomePage = () => {
             });            
        }
 
-        // if(movieDetails.active){
-        //   res = await fetch(`${baseUrl}/${mode}/${movieDetails.id}/credits?api_key=${apiKey}&language=en-US`)
-        //   .then(res => res.json())
-        //   .then(data => {
-        //     setMovieDetails({...movieDetails, cast: data.cast, active: false, visible: true})
-        //   })
-        // }
       }, [ entertainmentData, setEntertainmentData ]);
 
     useEffect(() => {
@@ -163,7 +156,6 @@ const HomePage = () => {
             </div>
         );
     };
-
 
   return (
     <div>

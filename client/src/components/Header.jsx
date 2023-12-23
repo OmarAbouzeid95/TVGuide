@@ -8,7 +8,7 @@ import { useContext, useState, useEffect } from 'react';
 import { modeContext, userContext } from "../contexts/contexts";
 import { Link } from "react-router-dom";
 
-export default function Header(props){
+export default function Header(){
 
     const [text, setText] = useState("")
     const [width, setWidth] = useState(window.innerWidth)
@@ -47,14 +47,14 @@ export default function Header(props){
         }else {
             setHeaderData(null)
         }
-    },[width, navShow, props, text]);
+    },[width, navShow, text]);
 
     
 
     return (
         <div className ="header-container">
             <div className="header-nav">
-                <div className="main-logo" onClick = {() => props.updateCurrentPage('homepage')}>
+                <div className="main-logo">
                     <img className="logo-img" src={logo} alt="website logo"></img>
                     <h2>TV Guide</h2>
                 </div>

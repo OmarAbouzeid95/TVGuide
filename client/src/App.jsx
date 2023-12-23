@@ -15,6 +15,7 @@ import PopularPage from './routes/PopularPage';
 import SearchPage from './routes/SearchPage';
 import TopRatedPage from './routes/TopRatedPage';
 import UpcomingPage from './routes/UpcomingPage';
+import HomePage from './routes/HomePage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // functions
@@ -28,6 +29,10 @@ const App = () => {
       path: '/',
       element: <Root />,
       children: [
+        {
+          path: '',
+          element: <HomePage />
+        },
         {
           path: 'signIn',
           element: <SignIn />

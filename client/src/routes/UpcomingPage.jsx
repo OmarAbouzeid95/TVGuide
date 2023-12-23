@@ -10,20 +10,20 @@ const UpcomingPage = () => {
     const [ upcomingContent, setUpcomingContent ] = useState();
 
     useEffect(() => {
-        if (!entertainmentData?.upcoming?.[mode]) {
+        if (!entertainmentData?.[mode]?.upcoming) {
             fetchUpcoming(mode)
                 .then(data => {
                     setUpcomingContent(mapMovies(data));
                     setEntertainmentData({
                         ...entertainmentData,
-                        upcoming: {
-                            ...(entertainmentData.popular || {}),
-                            [mode]: data
+                        [mode]: {
+                            ...(entertainmentData?.[mode] || {}),
+                            upcoming: data
                         }   
                     });
                 });
         } else {
-            setUpcomingContent(mapMovies(entertainmentData.upcoming[mode]));
+            setUpcomingContent(mapMovies(entertainmentData?.[mode]?.upcoming));
         }
     }, [entertainmentData, setEntertainmentData, mode]);
 

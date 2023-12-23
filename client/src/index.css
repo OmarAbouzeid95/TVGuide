@@ -198,8 +198,8 @@ body {
 /* movies-container */
 
 .genre-header {
-  margin: 0.5em 2em 0 2em;
-  font-size: 1.4rem;
+  margin: 0.5em 2em 0 1em;
+  font-size: 2rem;
   color: white;
   letter-spacing: 0.5px;
 }

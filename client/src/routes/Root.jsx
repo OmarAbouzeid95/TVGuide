@@ -21,7 +21,6 @@ function Root() {
           <modeContext.Provider value={{ mode, setMode }}>
             <Header />
             <Outlet />
-            {/* <Footer /> */}
           </modeContext.Provider>
         </entertainmentContext.Provider>
       </userContext.Provider>

@@ -4,24 +4,40 @@ import closeIcon from "../media/close-icon.png"
 import magnifyingGlass from "../media/magnifying-glass-solid.svg"
 import logo from "../media/logo.png"
 
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useCallback } from 'react';
 import { modeContext, userContext } from "../contexts/contexts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header(){
 
-    const [text, setText] = useState("")
-    const [width, setWidth] = useState(window.innerWidth)
-    const [headerData, setHeaderData] = useState(null)
-    const [navShow, setNavShow] = useState(false)
+    const [text, setText] = useState("");
+    const [width, setWidth] = useState(window.innerWidth);
+    const [headerData, setHeaderData] = useState(null);
+    const [navShow, setNavShow] = useState(false);
     // contexts
     const { mode, setMode } = useContext(modeContext);
     const { userData } = useContext(userContext);
+
+    const navigate = useNavigate();
 
     // toggles mode between movie / tv
     const toggleMode = () => {
         setMode((mode === 'movie') ? 'tv' : 'movie');
     }
+
+    const searchTextTerm = useCallback((e) => {
+        if(e.key === 'Enter' && text.trim() !== ''){
+            navigate(`search/${mode}/${text}`);
+        }
+    }, [mode, text, navigate]);
+
+    // Enter keypress listener
+    useEffect(() => {
+        const addListener = () => window.addEventListener('keypress', searchTextTerm);
+        const removeListener = () => window.removeEventListener('keypress', searchTextTerm);
+        addListener();
+        return removeListener;
+    }, [searchTextTerm]);
 
     useEffect(()=> {
         function toggleNavShow(){
@@ -78,7 +94,8 @@ export default function Header(){
                         }}}/>
                     <div className="searchbar-icons">
                         {text !== "" && <img className="clear-icon" src={closeIcon} alt="clear icon" onClick={() => setText("")}></img>}
-                        <Link to={`search/${mode}/${text}`}><img className="search-icon" src={magnifyingGlass} alt="search icon"/></Link>
+                        {/* <Link to={`search/${mode}/${text}`}><img className="search-icon" src={magnifyingGlass} alt="search icon"/></Link> */}
+                        <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => searchTextTerm({key: 'Enter'})}/>
                     </div>
                     
                 </div>

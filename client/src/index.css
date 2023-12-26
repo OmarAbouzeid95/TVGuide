@@ -382,13 +382,6 @@ body {
   }
 }
 
-
-
-
-
-
-
-
 .movie-poster-dt {
   border-radius: 0.5em;
 }
@@ -426,7 +419,7 @@ body {
 
 .rating-icon {
   width: 15px;
-  margin-right: 0.5em;
+  margin-right: 0.25em;
 }
 
 .movie-rating {
@@ -485,6 +478,8 @@ body {
 .movieDetails-container {
   color:white;
   padding: 4em;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
 .popupWrapper{ 
@@ -585,8 +580,8 @@ body {
 }
 
 .rating-wrapper{
-  background-color: black;
-  border-radius: 0.25em;
+  border: 2px solid white;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -636,31 +631,33 @@ body {
 .submitRating-btn {
   margin-bottom: 1.5em;
   width: 60%;
-  padding: 0.4em 0;
+  padding: 0.75em 0;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
   border: none;
   border-radius: 0.35em;
+  color: white;
+  background-color:transparent;
+  border: 2px solid white;
 }
 
 .rating-btn {
-  padding: 0.5em 1em;
+  padding: 0.75em 1.5em;
   color: white;
   background-color:transparent;
   font-weight: bold;
   letter-spacing: 1px;
-  text-transform: uppercase;
+  font-size: 1.1rem;
   display: flex;
-  align-items: flex-end;
   border-radius: 0.35em;
-  border: 1px solid white;
+  border: 2px solid white;
 }
 
 .rating-btn-icon{
   filter: invert(99%) sepia(0%) saturate(3667%) hue-rotate(206deg)
     brightness(116%) contrast(97%);
-  width: 17px;
+  width: 20px;
 }
 
 .add-watchlist {

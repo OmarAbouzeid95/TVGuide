@@ -196,7 +196,7 @@ export default function MovieDetails(){
                         <p>{allGenres}</p>
                         <p className="movie-description">{description}</p>
                         <p className="movie-date">{date}</p>
-                        {!rating && <button className="rating-btn" onClick={() => setRating(true)}><img src={unfilledStar} alt="star icon" className="rating-icon rating-btn-icon"></img>Rate movie</button>}
+                        {!rating && <button className="rating-btn" onClick={() => setRating(true)}><img src={unfilledStar} alt="star icon" className="rating-icon rating-btn-icon"></img>Rate</button>}
                     </div>
                 </div>
                 {rating &&
@@ -228,7 +228,7 @@ export default function MovieDetails(){
                 
                 {(video !== '') && <div className="movieDetails-video">
                     {/*eslint-disable-next-line jsx-a11y/iframe-has-title*/}
-                    <iframe width="650" height="350" src={video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"/>
+                    <iframe width="750" height="450" src={video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"/>
                 </div>}
                 <h2 className="cast-header">Cast</h2>
                 <div className = "movieDetails-cast">

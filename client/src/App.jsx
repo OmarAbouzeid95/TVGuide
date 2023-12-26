@@ -6,8 +6,6 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import MovieDetails from './components/MovieDetails';
 
-// mantine
-import { MantineProvider } from '@mantine/core';
 
 // routes
 import ErrorPage from './routes/ErrorPage';
@@ -90,9 +88,7 @@ const App = () => {
 
   return (
     <div>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
         <RouterProvider router={router} />
-      </MantineProvider>
     </div>
   );
   

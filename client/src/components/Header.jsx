@@ -70,10 +70,12 @@ export default function Header(){
     return (
         <div className ="header-container">
             <div className="header-nav">
-                <div className="main-logo">
-                    <img className="logo-img" src={logo} alt="website logo"></img>
-                    <h2>TV Guide</h2>
-                </div>
+                <Link class="main-logo-link" to={'/'}>
+                    <div className="main-logo">
+                        <img className="logo-img" src={logo} alt="website logo"></img>
+                        <h2>TV Guide</h2>
+                    </div>
+                </Link>
                 <div className="header-nav-buttons">
                     <Link className="header-nav-button" to={`/popular/${mode}`}>Popular</Link>
                     <Link className="header-nav-button" to={`/top-rated/${mode}`}>Top Rated</Link>

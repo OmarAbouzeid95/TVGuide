@@ -45,24 +45,23 @@ export default function SignIn(){
 
     return (
         <div className="form-box">
-
             {showLoader && <Loader />}
             <form className="form">
-                <span className="subtitle">Sign in with your email.</span>
-                {((signInStatus !== '') && (signInStatus !== 'success')) && <p className="signIn-failed">Email or password are incorrect.</p>}
+                <p>Sign in with your email.</p>
+                {((signInStatus !== '') && (signInStatus !== 'success')) && <p className="signIn-failed">Incorrect username or password.</p>}
                 {(signInStatus === 'success') && <p className="signIn-successful">Successfully Signed in!</p>}
                 <div className="form-container">
                         <input type="email" className="input" required placeholder="Email" onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
+                        <hr className="custom-hr"/>
                         <input type="password" className="input" required placeholder="Password" onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}></input>
+                        <hr className="custom-hr"/>
                 </div>
                 <button onClick={(e) => {
                     e.preventDefault()
                     signIn()
                     }}>Sign in</button>
             </form>
-            <div className="form-section">
-                <p>Don't have an account? <Link to={'/signup'}>Sign up</Link></p>
-            </div>
+                <p className="form-account-msg">Don't have an account? <Link to={'/signup'}>Sign up</Link></p>
     </div>
     )
 }

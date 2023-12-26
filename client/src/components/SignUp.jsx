@@ -86,19 +86,22 @@ export default function SignUp(props){
                 {(signUpStatus === 'success') && <p className="signUp-successful">Successfully Signed up!</p>}
                 <div className="form-container">
                         <input type="text" className="input" required placeholder="First Name" onChange={(e) => setUserInfo({...userInfo, firstName: e.target.value})}></input>
+                        <hr className="custom-hr"/>
                         <input type="text" className="input" required placeholder="Last Name" onChange={(e) => setUserInfo({...userInfo, lastName: e.target.value})}></input>
+                        <hr className="custom-hr"/>
                         <input type="email" className="input" required placeholder="Email" onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
+                        <hr className="custom-hr"/>
                         <input type="password" className="input" required placeholder="Password" onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}></input>
+                        <hr className="custom-hr"/>
                         <input type="password" className="input" required placeholder="Re-enter Password" onChange={(e) => setUserInfo({...userInfo, repassword: e.target.value})}></input>
+                        <hr className="custom-hr"/>
                 </div>
                 <button onClick={(e) => {
                     e.preventDefault()
                     signUp()
                     }}>Sign up</button>
             </form>
-            <div className="form-section">
-                <p>Have an account? <Link to={'/signin'}>Sign in</Link></p>
-            </div>
+                <p className="form-account-msg">Already have an account? <Link to={'/signin'}>Sign in</Link></p>
             
             </div> 
             )

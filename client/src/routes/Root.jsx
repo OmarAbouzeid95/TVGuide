@@ -2,6 +2,7 @@ import '../App.css';
 import {useState} from "react";
 import Header from '../components/Header';
 import Loader from '../components/Loader'
+import Breadcrumbs from '../components/Breadcrumbs';
 // import Footer from '../components/Footer';
 
 import { modeContext, userContext, entertainmentContext } from '../contexts/contexts';
@@ -20,6 +21,7 @@ function Root() {
         <entertainmentContext.Provider value={{ entertainmentData, setEntertainmentData }}>
           <modeContext.Provider value={{ mode, setMode }}>
             <Header />
+            <Breadcrumbs />
             <Outlet />
           </modeContext.Provider>
         </entertainmentContext.Provider>

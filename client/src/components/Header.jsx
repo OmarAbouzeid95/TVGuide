@@ -8,6 +8,8 @@ import { useContext, useState, useEffect, useCallback } from 'react';
 import { modeContext, userContext } from "../contexts/contexts";
 import { Link, useNavigate } from "react-router-dom";
 
+import Dropdown from "./Dropdown"
+
 export default function Header(){
 
     const [text, setText] = useState("");
@@ -45,21 +47,34 @@ export default function Header(){
         }
         window.addEventListener("resize", ()=>{
             setWidth(window.innerWidth)})
-        if(width < 700){
-            setHeaderData(<div className="mobile-nav-icon">
-            <div className="hamburger-icon"><img  src={hamburgerIcon} alt="hamburger-icon" onClick = {toggleNavShow}></img></div>
-            <div className = {`mobile-nav ${navShow ? "mobile-nav-show" : "mobile-nav-hide"}`}>
-                <Link className="mobile-nav-btn" to={`/popular/${mode}`} onClick={toggleNavShow}>Popular</Link>
-                <Link className="mobile-nav-btn" to={`/top-rated/${mode}`} onClick={toggleNavShow}>Top Rated</Link>
-                {(mode === 'movie') && <Link className="mobile-nav-btn" to={`/upcoming/${mode}`} onClick={toggleNavShow}>Upcoming</Link>}
-                <Link className="mobile-nav-btn" to={'/trending'} onClick={toggleNavShow}>Trending</Link>
-                <Link className="mobile-nav-btn" to={userData ? '/profile' : '/signin'} onClick={toggleNavShow}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
-                <button className="mobile-nav-btn" onClick = {()=> {
-                    toggleMode()
-                    toggleNavShow()
-                }}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
+        if(width < 769){
+            setHeaderData(
+            <div className="search-nav-icon-container">
+                <div className="header-search-container">
+                    <div className="header-searchbar-container">
+                        <input className="header-search-bar" type="text" onChange={(e) => setText(e.target.value)} value={text}/>
+                        <div className="searchbar-icons">
+                            {text !== "" && <img className="clear-icon" src={closeIcon} alt="clear icon" onClick={() => setText("")}></img>}
+                            <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => searchTextTerm({key: 'Enter'})}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="mobile-nav-icon">
+                    <div className="hamburger-icon"><img  src={hamburgerIcon} alt="hamburger-icon" onClick = {toggleNavShow}></img></div>
+                    <div className = {`mobile-nav ${navShow ? "mobile-nav-show" : "mobile-nav-hide"}`}>
+                        <Link className="mobile-nav-btn" to={`/popular/${mode}`} onClick={toggleNavShow}>Popular</Link>
+                        <Link className="mobile-nav-btn" to={`/top-rated/${mode}`} onClick={toggleNavShow}>Top Rated</Link>
+                        {(mode === 'movie') && <Link className="mobile-nav-btn" to={`/upcoming/${mode}`} onClick={toggleNavShow}>Upcoming</Link>}
+                        <Link className="mobile-nav-btn" to={'/trending'} onClick={toggleNavShow}>Trending</Link>
+                        <Link className="mobile-nav-btn" to={userData ? '/profile' : '/signin'} onClick={toggleNavShow}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
+                        <button className="mobile-nav-btn" onClick = {()=> {
+                            toggleMode()
+                            toggleNavShow()
+                        }}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
+                    </div>
+                </div>
             </div>
-        </div>)
+            )
         }else {
             setHeaderData(null)
         }
@@ -68,40 +83,32 @@ export default function Header(){
     
 
     return (
-        <div className ="header-container">
-            <div className="header-nav">
-                <Link class="main-logo-link" to={'/'}>
-                    <div className="main-logo">
-                        <img className="logo-img" src={logo} alt="website logo"></img>
-                        <h2>TV Guide</h2>
+        <div className="header-container-wrapper">
+            <div className ="header-container">
+                <div className="header-nav">
+                    <Link className="main-logo-link" to={'/'}>
+                        <div className="main-logo">
+                            <img className="logo-img" src={logo} alt="website logo"></img>
+                            <h2>TV Guide</h2>
+                        </div>
+                    </Link>
+                    <div className="header-nav-buttons">
+                        <div className="header-search-container">
+                            <div className="header-searchbar-container">
+                                <input className="header-search-bar" type="text" onChange={(e) => setText(e.target.value)} value={text}/>
+                                <div className="searchbar-icons">
+                                    {text !== "" && <img className="clear-icon" src={closeIcon} alt="clear icon" onClick={() => setText("")}></img>}
+                                    <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => searchTextTerm({key: 'Enter'})}/>
+                                </div>
+                            </div>
+                        </div>
+                        <Dropdown />
+                        <button className="header-nav-button" onClick = {toggleMode}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
+                        <Link className="header-nav-button" to={userData ? '/profile' : '/signin'}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
                     </div>
-                </Link>
-                <div className="header-nav-buttons">
-                    <Link className="header-nav-button" to={`/popular/${mode}`}>Popular</Link>
-                    <Link className="header-nav-button" to={`/top-rated/${mode}`}>Top Rated</Link>
-                    {(mode === 'movie') && <Link className="header-nav-button" to={`/upcoming/${mode}`}>Upcoming</Link>}
-                    <Link className="header-nav-button" to={'/trending'}>Trending</Link>
-                    <button className="header-nav-button" onClick = {toggleMode}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
-                    <Link className="header-nav-button" to={userData ? '/profile' : '/signin'}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
-                </div>
-                {headerData}
-            </div>
-            <div className="header-search-container">
-                <div className="header-searchbar-container">
-                    <input className="header-search-bar" type="text" onChange={(e) => setText(e.target.value)} value={text}
-                        onKeyDown={(e) => { if(e.key === 'Enter'){
-                            // searchMovies(text, mode) 
-                            if (e.repeat)
-                                return
-                        }}}/>
-                    <div className="searchbar-icons">
-                        {text !== "" && <img className="clear-icon" src={closeIcon} alt="clear icon" onClick={() => setText("")}></img>}
-                        {/* <Link to={`search/${mode}/${text}`}><img className="search-icon" src={magnifyingGlass} alt="search icon"/></Link> */}
-                        <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => searchTextTerm({key: 'Enter'})}/>
-                    </div>
-                    
+                    {headerData}
                 </div>
             </div>
         </div>
-    )
+    );
 }

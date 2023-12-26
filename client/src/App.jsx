@@ -1,11 +1,11 @@
 import './App.css';
+import { Link } from 'react-router-dom';
 
 // components
 import Root from './routes/Root';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import MovieDetails from './components/MovieDetails';
-
 
 // routes
 import ErrorPage from './routes/ErrorPage';
@@ -48,7 +48,10 @@ const App = () => {
           loader: async ({params}) => {
             const { mode, keyword } = params;
             return searchMovies(mode, keyword);
-          }
+          },
+          // handle: {
+          //   crumbName: 'Search'
+          // }
         },
         {
           path: '/trending',

@@ -150,7 +150,7 @@ body {
 .reviewInput-field, .reviewWrapper {
   width: 100%;
   padding: 0.35em 3.5em 0.35em 0;
-  font-size: 1.1em;
+  font-size: 1em;
   background-color: transparent;
   color: white;
   border-radius: 15px;
@@ -929,14 +929,15 @@ fieldset {
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
-  background-color: #282c36;
+  background-color: var(--primary-color);
   position: absolute;
-  width: 110px;
+  width: 200px;
   top: 0;
   right: 0;
   padding-top: 5em;
   color: white;
   z-index: 2;
+  border-left: 0.5px solid var(--secondary-color);
   transition: all 0.3s;
 }
 
@@ -945,14 +946,15 @@ fieldset {
   flex-direction: column;
   justify-content: flex-start;
   height: 100vh;
-  background-color: #282c36;
+  background-color: var(--primary-color);
   position: absolute;
-  width: 110px;
+  width: 200px;
   top: 0;
   right: -100%;
   padding-top: 5em;
   color: white;
   z-index: 2;
+  border-left: 0.5px solid var(--secondary-color);
   transition: all 0.3s;
 }
 
@@ -1059,11 +1061,11 @@ fieldset {
 .dropdown:not(:checked) + label{
   position: relative;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 1em;
   line-height: 2;
   transition: all 200ms linear;
   border-radius: 15px;
-  padding: 0.25em;
+  padding: 0.15em;
   width: 115px;
   letter-spacing: 1px;
   display: -webkit-inline-flex;
@@ -1311,4 +1313,64 @@ fieldset {
   top: 20px;
   right: 20px;
 }
+}
+
+/* Footer */
+
+
+.footer-wrapper {
+  border-top: 0.5px solid var(--secondary-color);
+  padding: 1em 2em;
+}
+
+.footer-links-wrapper {
+  max-width: 768px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  color: white;
+}
+
+.footer-wrapper li {
+  list-style: none;
+}
+
+.footer-link {
+  color: white;
+  padding-bottom: 0.3em;
+}
+
+.footer-link a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-link a:hover {
+  text-decoration: underline;
+}
+
+.footer-links-wrapper ul {
+  padding-left: 0px;
+}
+
+.social-links {
+  display: flex;
+}
+
+.social-links li {
+  margin-right: 1em;
+}
+
+.copy-right {
+  border-top: 0.5px solid var(--secondary-color);
+  text-align: center;
+  color: white;
+  padding-top: 1em;
+}
+
+@media(max-width: 768px) {
+  .footer-links-wrapper {
+    flex-direction: column;
+  }
 }

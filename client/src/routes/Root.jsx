@@ -3,7 +3,7 @@ import {useState} from "react";
 import Header from '../components/Header';
 import Loader from '../components/Loader'
 import Breadcrumbs from '../components/Breadcrumbs';
-// import Footer from '../components/Footer';
+import Footer from '../components/Footer';
 
 import { modeContext, userContext, entertainmentContext } from '../contexts/contexts';
 import { Outlet } from 'react-router-dom';
@@ -23,6 +23,7 @@ function Root() {
             <Header />
             <Breadcrumbs />
             <Outlet />
+            <Footer />
           </modeContext.Provider>
         </entertainmentContext.Provider>
       </userContext.Provider>

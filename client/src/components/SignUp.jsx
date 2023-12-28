@@ -81,7 +81,7 @@ export default function SignUp(props){
 
             {showLoader && <Loader />}
             <form className="form">
-                <span className="subtitle">Create a free account with your email.</span>
+                <h3>Create a free account with your email.</h3>
                 {((signUpStatus !== '') && (signUpStatus !== 'success')) && <p className="signUp-failed">{signUpStatus}</p>}
                 {(signUpStatus === 'success') && <p className="signUp-successful">Successfully Signed up!</p>}
                 <div className="form-container">

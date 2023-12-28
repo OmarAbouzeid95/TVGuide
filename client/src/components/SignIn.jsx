@@ -47,7 +47,7 @@ export default function SignIn(){
         <div className="form-box">
             {showLoader && <Loader />}
             <form className="form">
-                <p>Sign in with your email.</p>
+                <h3>Sign in with your email.</h3>
                 {((signInStatus !== '') && (signInStatus !== 'success')) && <p className="signIn-failed">Incorrect username or password.</p>}
                 {(signInStatus === 'success') && <p className="signIn-successful">Successfully Signed in!</p>}
                 <div className="form-container">

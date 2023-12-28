@@ -449,22 +449,6 @@ body {
 
 /* Movies details */
 
-.show-movie-details, .popupContainer {
-  position: absolute;
-  min-height: 100%;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.6);
-  animation: popup 0.6s;
-}
-
-.popupContainer {
-  position: fixed;
-}
-
 @keyframes popup {
   0% {
     opacity: 0;
@@ -520,7 +504,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90%;
   width: 100%;
 }
 
@@ -1344,6 +1327,10 @@ fieldset {
 .footer-link a {
   color: white;
   text-decoration: none;
+}
+
+.footer-list-title {
+  color: #D0D0D0;
 }
 
 .footer-link a:hover {

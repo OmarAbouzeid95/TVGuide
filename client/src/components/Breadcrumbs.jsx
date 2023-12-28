@@ -2,7 +2,6 @@ import { useMatches, Link } from "react-router-dom";
 
 const Breadcrumbs = () => {
     const matches = useMatches();
-    console.log('matches: ', matches);
     let crumbs = matches
         .filter((match) => match.handle?.crumbName)
         .map((match) => ({crumbName: match.handle.crumbName, path: match.pathname}));

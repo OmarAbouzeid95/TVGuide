@@ -12,7 +12,7 @@ const Dropdown = () => {
     <div>
         <div className="sec-center"> 	
             <input className="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
-            <label className="for-dropdown" for="dropdown">Browse<FontAwesomeIcon icon={faChevronDown} className="uil"/></label>
+            <label className="for-dropdown" htmlFor="dropdown">Browse<FontAwesomeIcon icon={faChevronDown} className="uil"/></label>
             <div className="section-dropdown"> 
                 <Link className="dropdown-link" to={`/popular/${mode}`}>Popular</Link>
                 <Link className="dropdown-link" to={`/top-rated/${mode}`}>Top Rated</Link>

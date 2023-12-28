@@ -1,15 +1,14 @@
 
-function Loader({message}) {
+function Loader({style}) {
     return ( 
-        <div className="popupContainer">
-            <div className="loaderWrapper">
+        <div>
+            <div className="loaderWrapper" style={style}>
                 <div className="spinner">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
             </div>
-            <p>{message}</p>
         </div>
     );
 }

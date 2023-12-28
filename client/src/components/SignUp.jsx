@@ -20,10 +20,13 @@ export default function SignUp(props){
         const isPassword = str => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(str)
         if (!isAlpha(userInfo.firstName) || userInfo.firstName.trim(' ') === ''){
             setSignUpStatus('Enter a valid First name')
+            setShowLoader(false)
         }else if(!isAlpha(userInfo.lastName) || userInfo.lastName.trim(' ') === ''){
             setSignUpStatus('Enter a valid last name')  
+            setShowLoader(false)
         }else if(userInfo.email.indexOf('@') === -1 || userInfo.email.indexOf('.') === -1){
             setSignUpStatus('Enter a valid email address')
+            setShowLoader(false)
         }
         else if(!isPassword(userInfo.password)){
             setSignUpStatus(<span className="pw-rules">Password needs to match these rules: <br></br>
@@ -31,9 +34,11 @@ export default function SignUp(props){
                            - At least one uppercase letter <br></br>
                            - At least one lowercase letter <br></br>
                            - One number <br></br>
-                           - One special character</span>)             
+                           - One special character</span>)  
+            setShowLoader(false)           
         }else if(userInfo.password !== userInfo.repassword){
             setSignUpStatus("Passwords don't match")
+            setShowLoader(false)
         }else {
             /**
              * Check if email already exists in the DB
@@ -45,22 +50,21 @@ export default function SignUp(props){
                     /**
                      * Create new user by POST request
                      */
+                    const { firstName, lastName, email, password } = userInfo;
+                    console.log('userInfo: ', userInfo);
                     fetch(`${process.env.REACT_APP_SERVER_URL}/signUp`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify(userInfo)
+                        body: JSON.stringify({ firstName, lastName, email, password })
                     })
                     .then(res => res.json())
                     .then(data => {
                         if (data.result === "success"){
-                            setUserData(data);
-                            setTimeout(() => {
-                                navigation('/');
-                            }, 2000)
-                            setSignUpStatus('success')
-                            setShowLoader(false)
+                            setUserData(data.user);
+                            navigation('/');
+                            setShowLoader(false);
                         }else {
                             setSignUpStatus('Failed to sign up.')
                             setShowLoader(false)
@@ -78,12 +82,9 @@ export default function SignUp(props){
 
     return (
         <div className="form-box">
-
-            {showLoader && <Loader />}
             <form className="form">
                 <h3>Create a free account with your email.</h3>
-                {((signUpStatus !== '') && (signUpStatus !== 'success')) && <p className="signUp-failed">{signUpStatus}</p>}
-                {(signUpStatus === 'success') && <p className="signUp-successful">Successfully Signed up!</p>}
+                {(signUpStatus !== 'failed') && <p className="signUp-failed">{signUpStatus}</p>}
                 <div className="form-container">
                         <input type="text" className="input" required placeholder="First Name" onChange={(e) => setUserInfo({...userInfo, firstName: e.target.value})}></input>
                         <hr className="custom-hr"/>
@@ -96,14 +97,15 @@ export default function SignUp(props){
                         <input type="password" className="input" required placeholder="Re-enter Password" onChange={(e) => setUserInfo({...userInfo, repassword: e.target.value})}></input>
                         <hr className="custom-hr"/>
                 </div>
-                <button onClick={(e) => {
+                <button disabled={showLoader} onClick={(e) => {
                     e.preventDefault()
                     signUp()
                     }}>Sign up</button>
             </form>
-                <p className="form-account-msg">Already have an account? <Link to={'/signin'}>Sign in</Link></p>
+            {showLoader && <Loader />}
+            <p className="form-account-msg">Already have an account? <Link to={'/signin'}>Sign in</Link></p>
             
-            </div> 
+        </div> 
             )
         }
             

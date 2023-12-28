@@ -35,33 +35,29 @@ export default function SignIn(){
                 // signed in successfully
                 setUserData(data)
                 setShowLoader(false)
-                setTimeout(() => {
-                    navigation('/')
-                }, 2000)
-                setSignInStatus('success')
+                navigation('/')
             }
         })
     }
 
     return (
         <div className="form-box">
-            {showLoader && <Loader />}
             <form className="form">
                 <h3>Sign in with your email.</h3>
-                {((signInStatus !== '') && (signInStatus !== 'success')) && <p className="signIn-failed">Incorrect username or password.</p>}
-                {(signInStatus === 'success') && <p className="signIn-successful">Successfully Signed in!</p>}
+                {(signInStatus === 'failed') && <p className="signIn-failed">Incorrect username or password.</p>}
                 <div className="form-container">
                         <input type="email" className="input" required placeholder="Email" onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
                         <hr className="custom-hr"/>
                         <input type="password" className="input" required placeholder="Password" onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}></input>
                         <hr className="custom-hr"/>
                 </div>
-                <button onClick={(e) => {
+                <button disabled={showLoader} onClick={(e) => {
                     e.preventDefault()
                     signIn()
                     }}>Sign in</button>
             </form>
-                <p className="form-account-msg">Don't have an account? <Link to={'/signup'}>Sign up</Link></p>
+            {showLoader && <Loader />}
+            <p className="form-account-msg">Don't have an account? <Link to={'/signup'}>Sign up</Link></p>
     </div>
-    )
+    );
 }

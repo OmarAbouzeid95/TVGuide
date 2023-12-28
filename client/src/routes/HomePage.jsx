@@ -159,7 +159,7 @@ const HomePage = () => {
 
   return (
     <div>
-        { allResults ?? <Loader /> }
+        { allResults ?? <Loader style={{height: '70vh'}}/> }
     </div>
   );
 

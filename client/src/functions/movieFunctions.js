@@ -56,7 +56,6 @@ export const fetchTrailer = async (mode, id) => {
     return '';
 };
 
-
 export const mapMovies = (movies, movieList = 'all') => {
     return movies.map(movie => {
         return <Movie 

@@ -12,7 +12,7 @@ function Root() {
 
   // contexts
   const [ mode, setMode ] = useState('movie');
-  const [ userData, setUserData ] = useState();
+  const [ userData, setUserData ] = useState(JSON.parse(sessionStorage.getItem('loggedUser')));
   const [ entertainmentData, setEntertainmentData ] = useState({});
 
   return (

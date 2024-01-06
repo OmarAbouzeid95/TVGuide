@@ -947,6 +947,7 @@ fieldset {
   align-items: center;
   color: white;
   text-align: center;
+  height: 60vh;
 }
 
 @media (max-width: 1120px) {

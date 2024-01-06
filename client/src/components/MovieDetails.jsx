@@ -1,4 +1,4 @@
-import {useState, useContext} from "react"
+import {useState, useContext, useEffect} from "react"
 import Cast from "./Cast"
 import { posterPath, movieGenres } from "../info"
 import unknownUser from "../media/unknownUser.jpeg"
@@ -12,7 +12,8 @@ import unfilledStar from "../media/star-unfilled.png"
 import deleteIcon from "../media/delete.png"
 
 import { useLoaderData, useLocation } from "react-router-dom";
-import { userContext } from "../contexts/contexts"
+import { userContext } from "../contexts/contexts";
+import { fetchRatingAndComments, addReview, deleteReview } from "../functions/dbFunctions"
 
 
 export default function MovieDetails(){
@@ -20,13 +21,22 @@ export default function MovieDetails(){
     const [rating, setRating] = useState(false);
     const [stars, setStars] = useState(0);
     const [review, setReview] = useState('');
-    const [currentRating, setCurrentRating] = useState(0.0);
+    const [currentRating, setCurrentRating] = useState();
     const [currentReviews, setCurrentReviews] = useState([]);
     const location = useLocation();
     const { userData } = useContext(userContext);
 
     const { cast, trailer: video } = useLoaderData();
     const { id, title, description, rating: propRating, date, genres, poster } = location.state;
+
+
+    useEffect(() => {
+        fetchRatingAndComments(id)
+        .then(result => {
+            setCurrentReviews(result?.reviews || []);
+            setCurrentRating(result?.dbRating || 0.0);
+        });
+    }, [id]);
 
     
     let allCast = cast.map(cast => {
@@ -50,138 +60,106 @@ export default function MovieDetails(){
     allGenres = allGenres.substr(0, allGenres.length - 2)
 
     let reviewId = 0
-    let allReviews = currentReviews.map(review => {
-        return <div className="reviewContainer"><Review name = {review.name}
+    let allReviews = currentReviews.map((review, index) => {
+        return <div className="reviewContainer" key={index}><Review name = {review.name}
                        comment = {review.comment}
                        key = {reviewId++}/>
-                       {(userData !== null) &&(review.email === userData.email) && <img className="deleteReview-btn" alt="delete icon" src={deleteIcon}
-                                                                                                onClick={() => deleteReview(review.email, review.comment, review.name, id)}></img>}
+                       {(userData) && (review.email === userData.email) && <img className="deleteReview-btn" alt="delete icon" src={deleteIcon}
+                                                                                                onClick={() => removeReview(id, review.email, review.comment)}></img>}
                 </div>       
     })
 
-    function deleteReview(email, comment, name, movieId){
-        /**
-         * find corresponding movie
-         */
-        fetch(`${process.env.REACT_APP_SERVER_URL}/movies/${movieId}`)
-        .then(res => res.json())
-        .then(data => {
-
-            // finding the index of the review and removing it from the reviews array
-            console.log(data)
-            let reviews = data.reviews
-            const reviewIndex = reviews.findIndex(obj => (obj.email === email && obj.comment === comment))
-            reviews.splice(reviewIndex, 1)
-            console.log(reviews)
-            // patching the corresponding movie details
-            fetch(`${process.env.REACT_APP_SERVER_URL}/movies`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({id:movieId ,updates: {reviews: reviews}})
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setCurrentReviews(reviews)    
-            })
-        })
+    async function removeReview(id, email, review) {
+        const updatedReviews = await deleteReview(id, email, review);
+        setCurrentReviews(updatedReviews || []);
     }
 
 
-    function updateMovieDetails(){
+    async function updateMovieDetails(){
         /**
          * Check if user is signed in before updating movie details
          */
-        if(userData === null){
+        if(!userData){
             /**
              * Close the movie details page and redirect to the signIn page
              */
+            console.log('no logged in user');
         }else {
             /**
              * Check if Movie with this ID has details stored in the DB, if so then PATCH request, else it's a POST request 
              */
-            fetch(`${process.env.REACT_APP_SERVER_URL}/movies/${id}`)
-            .then(res => res.json())
-            .then(getRequestData => {
-                if(getRequestData === null){
-                    /**
-                     * POST request
-                     */
-                    const body = {
-                        movie_id: id,
-                        ratingCount: stars > 0 ? 1 : 0,
-                        ratingTotal: stars,
-                        reviews: review.trim(' ') === '' ? [] :
-                         [{
-                            name: userData.firstName + ' ' + userData.lastName,
-                            email: userData.email,
-                            comment: review.trim(' ')
-                         }]
-                    }
-                    fetch(`${process.env.REACT_APP_SERVER_URL}/movies`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(body)
-                    })
-                    .then(res => res.json())
-                    .then(postRequestData => {
-                        console.log(postRequestData)
-                        setCurrentRating(body.ratingCount > 0 ? (body.ratingTotal/body.ratingCount).toFixed(1) : 0.0)
-                        setCurrentReviews(body.reviews)
-                        setStars(0)
-                        setReview('')
-                    })
-                }else {
-                    /**
-                     * PATCH request
-                     */
-                    const dbReviews = getRequestData.reviews
-                    let dbRatingCount = getRequestData.ratingCount
-                    let dbRatingTotal = getRequestData.ratingTotal
-                    let dbRating = dbRatingTotal/dbRatingCount
-                    if(review.trim(' ') !== ''){
-                        const thisReview = {
-                            name: userData.firstName + ' ' + userData.lastName,
-                            email: userData.email,
-                            comment: review.trim(' ')
-                        }
-                        dbReviews.push(thisReview)
-                    }
-                    if(stars !== 0){
-                        dbRatingCount++
-                        dbRatingTotal += stars
-                        dbRating = dbRatingTotal/dbRatingCount
-                    }
-                    const body = {
-                        updates: {
-                            reviews: dbReviews,
-                            ratingCount: dbRatingCount,
-                            ratingTotal: dbRatingTotal,
-                            rating: dbRating
-                        },
-                        id: getRequestData.movie_id
-                    }
-                    fetch(`${process.env.REACT_APP_SERVER_URL}/movies`, {
-                        method: "PATCH",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(body)
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data)
-                        setCurrentRating((body.updates.rating).toFixed(1))
-                        setCurrentReviews(body.updates.reviews)
-                        setStars(0)
-                        setReview('')
-                    })
-                }
-            })
+            const body = {
+                movieId: id,
+                rating: stars,
+                ratingCount: stars > 0 ? 1 : 0,
+                ratingTotal: stars,
+                reviews: review.trim(' ') === '' ? [] :
+                 [{
+                    name: userData.firstName + ' ' + userData.lastName,
+                    email: userData.email,
+                    comment: review.trim(' ')
+                 }]
+            };
+            const movieDetails = await fetchRatingAndComments(id);
+            // check if movie exists in the DB
+            if(movieDetails?.reviews) {
+                // PATCH request
+                console.log('patching updates...');
+            }else {
+                // POST request
+                const res = await addReview(body);
+                const { rating, reviews } = res;
+                setCurrentRating(rating);
+                setCurrentReviews(reviews);
+                setReview('');
+                setStars(0);
+            }
+            // else {
+            //         /**
+            //          * PATCH request
+            //          */
+            //         const dbReviews = getRequestData.reviews
+            //         let dbRatingCount = getRequestData.ratingCount
+            //         let dbRatingTotal = getRequestData.ratingTotal
+            //         let dbRating = dbRatingTotal/dbRatingCount
+            //         if(review.trim(' ') !== ''){
+            //             const thisReview = {
+            //                 name: userData.firstName + ' ' + userData.lastName,
+            //                 email: userData.email,
+            //                 comment: review.trim(' ')
+            //             }
+            //             dbReviews.push(thisReview)
+            //         }
+            //         if(stars !== 0){
+            //             dbRatingCount++
+            //             dbRatingTotal += stars
+            //             dbRating = dbRatingTotal/dbRatingCount
+            //         }
+            //         const body = {
+            //             updates: {
+            //                 reviews: dbReviews,
+            //                 ratingCount: dbRatingCount,
+            //                 ratingTotal: dbRatingTotal,
+            //                 rating: dbRating
+            //             },
+            //             id: getRequestData.movie_id
+            //         }
+            //         fetch(`${process.env.REACT_APP_SERVER_URL}/movies`, {
+            //             method: "PATCH",
+            //             headers: {
+            //                 "Content-Type": "application/json"
+            //             },
+            //             body: JSON.stringify(body)
+            //         })
+            //         .then(res => res.json())
+            //         .then(data => {
+            //             console.log(data)
+            //             setCurrentRating((body.updates.rating).toFixed(1))
+            //             setCurrentReviews(body.updates.reviews)
+            //             setStars(0)
+            //             setReview('')
+            //         })
+            //     }
         }
     }
 

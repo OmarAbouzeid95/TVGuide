@@ -1,5 +1,4 @@
 import './App.css';
-import { Link } from 'react-router-dom';
 
 // components
 import Root from './routes/Root';
@@ -20,7 +19,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // functions
 import { searchMovies } from './functions/movieFunctions';
 import { fetchCast, fetchTrailer } from './functions/movieFunctions';
-import { fetchRatingAndComments } from './functions/dbFunctions';
 
 const App = () => {
 

@@ -3,8 +3,8 @@ const ErrorPage = () => {
   return (
     <div className="error-component">
         <div>
-            <h2>Oops!</h2>
-            <h4>Looks like you took a wrong turn.</h4>
+            <h1 style={{fontSize: '3rem'}}>Oops!</h1>
+            <h2>Looks like you took a wrong turn.</h2>
         </div>  
     </div>
   );

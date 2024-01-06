@@ -34,6 +34,7 @@ export default function SignIn(){
             } else {
                 // signed in successfully
                 setUserData(data)
+            sessionStorage.setItem('loggedUser', JSON.stringify(data));
                 setShowLoader(false)
                 navigation('/')
             }

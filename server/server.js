@@ -57,20 +57,6 @@ app.get('/user/:email', async (req, res) => {
     }
 });
 
-// // Checking if name exists
-// app.get('/user/:name', (req, res) => {
-
-//     const userName = req.params.name
-
-//     db.collection('users')
-//         .findOne({ firstName: userName })
-//         .then(user => {
-//             res.status(200).json(user)
-//         })
-//         .catch(error => {
-//             res.status(500).json({ error: "Couldn't fetch user: " + error })
-//         })
-// });
 
 // // updating user info
 // app.patch('/updateUser', (req, res) => {
@@ -92,40 +78,50 @@ app.get('/user/:email', async (req, res) => {
 //         })
 // })
 
-// // fetching movie reviews from the DB
-// app.get('/movies/:id', (req, res) => {
+// fetching movie reviews from the DB
+app.get('/movies/:id', async (req, res) => {
 
-//     const movieId = parseInt(req.params.id)
-//     db.collection('movies')
-//         .findOne({ movie_id: movieId })
-//         .then(movie => {
-//             res.status(200).json(movie)
-//         })
-//         .catch(error => {
-//             res.status(500).json({ error: "Couldn't fetch movie reviews" })
-//         })
-// })
+    const movieId = parseInt(req.params.id);
+    try {
+        const foundMovie = await Movie.findOne({movieId: movieId});
+        const result = foundMovie || {};
+        res.status(200).json(result);
+    } catch(err) {
+        res.status(500).json({error: err});
+    }
 
-// // adding movie details (rating and reviews)
-// app.post('/movies', (req, res) => {
+});
 
-//     const body = req.body
-//     const rating = parseInt(body.ratingTotal)
-//     db.collection('movies')
-//         .insertOne({
-//             movie_id: body.movie_id,
-//             rating: rating,
-//             ratingCount: parseInt(body.ratingCount),
-//             ratingTotal: parseInt(body.ratingTotal),
-//             reviews: body.reviews
-//         })
-//         .then(() => {
-//             res.status(200).json({ result: 'success' })
-//         })
-//         .catch(error => {
-//             res.status(500).json({ result: 'error' })
-//         })
-// })
+
+// adding movie details (rating and reviews)
+app.post('/movies', async (req, res) => {
+    
+    const body = req.body;
+    try {
+        const newMovieDetail = new Movie(body);
+        const addedMovieDetail = await newMovieDetail.save();
+        res.status(200).json(addedMovieDetail);
+    } catch(err) {
+        res.status(500).json({error: err});
+    }
+
+});
+
+// deleting movie review
+app.patch('/movies', async (req, res) => {
+
+    const { id, email, comment } = req.body;
+    try {
+        const foundMovie = await Movie.findOne({movieId: id});
+        let { reviews } = foundMovie;
+        reviews = reviews.filter(review => (review.email !== email) && (review.comment !== comment));
+        const updatedMovie = await Movie.updateOne({movieId: id}, {$set: {reviews}});
+        res.status(200).json(updatedMovie);
+    } catch(err) {
+        res.status(500).json({error: err});
+    }
+
+});
 
 // // updating movie details using PATCH
 // app.patch('/movies', (req, res) => {

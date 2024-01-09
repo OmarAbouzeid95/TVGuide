@@ -74,8 +74,6 @@ const App = () => {
             const { mode, id } = params;
             const cast = await fetchCast(mode, id);
             const trailer = await fetchTrailer(mode, id);
-            // const { reviews, dbRating, dbRatingCount, dbRatingTotal } = await fetchRatingAndComments(id);
-            // return { cast, trailer, reviews, dbRating, dbRatingCount, dbRatingTotal };
             return { cast, trailer };
           }
         },

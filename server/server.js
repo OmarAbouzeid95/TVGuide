@@ -123,7 +123,20 @@ app.patch('/movies', async (req, res) => {
 
 });
 
-// // updating movie details using PATCH
+// updating movie details
+app.patch('/movies/update', async (req, res) => {
+
+    const { id, updates } = req.body;
+    console.log('id: ', id, '| updates: ', updates);
+    try {
+        const updatedMovie = await Movie.findOneAndUpdate({movieId:id}, {$set: updates}, {new: true});
+        res.status(200).json(updatedMovie);    
+    } catch(err) {
+        console.log('error: ', err);
+        res.status(500).json({error: err});
+    }
+});
+
 // app.patch('/movies', (req, res) => {
 
 //     const id = req.body.id

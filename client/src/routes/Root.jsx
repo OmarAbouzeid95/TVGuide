@@ -1,7 +1,6 @@
 import '../App.css';
 import {useState} from "react";
 import Header from '../components/Header';
-import Loader from '../components/Loader'
 import Breadcrumbs from '../components/Breadcrumbs';
 import Footer from '../components/Footer';
 
@@ -31,6 +30,6 @@ function Root() {
   );
 
 
-}
+};
 
 export default Root;

@@ -21,7 +21,7 @@ export default function MovieDetails(){
     const [rating, setRating] = useState(false);
     const [stars, setStars] = useState(0);
     const [review, setReview] = useState('');
-    const [currentRating, setCurrentRating] = useState();
+    const [currentRating, setCurrentRating] = useState(0);
     const [currentReviews, setCurrentReviews] = useState([]);
     const location = useLocation();
     const { userData } = useContext(userContext);
@@ -146,7 +146,7 @@ export default function MovieDetails(){
                     <img className="movie-poster-dt" src={poster} alt="movie poster"></img>
                     <div>
                         <p><span className="movie-details-title">{title}</span><span className="movie-rating"><img className="rating-icon" src={ratingIcon} alt="rating-icon"></img>{propRating}</span>
-                        <span className="movie-rating"><img className="rating-icon logo-img" src={logo} alt="rating-icon"></img>{currentRating}</span></p>
+                        <span className="movie-rating"><img className="rating-icon logo-img" src={logo} alt="rating-icon"></img>{currentRating.toFixed(1)}</span></p>
                         <p>{allGenres}</p>
                         <p className="movie-description">{description}</p>
                         <p className="movie-date">{date}</p>

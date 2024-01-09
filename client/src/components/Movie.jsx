@@ -15,13 +15,6 @@ export default function Movie(props){
         setWindowSize(window.innerWidth)
     })
 
-    let title = ''
-    if (props.title.length > 22){
-        title = props.title.substr(0,19) + '...'
-    }
-    else {
-        title = props.title
-    }
     return (
         <div className = "movie-container" onClick = {() => 
             navigate(`/show-details/${mode}/${props.title}/${props.id}/${props.description}/${props.rating}/${props.date}/${props.genres}/${props.originalPosterPath.slice(1)}`)} 
@@ -36,7 +29,7 @@ export default function Movie(props){
             <div className="poster-container">
                 <img className={`movie-poster ${imgStyle}`} src={props.poster} alt="movie poster"></img>
             </div>
-            <h4 className="movie-title">{title}</h4>
+            <h4 className="movie-title">{props.title}</h4>
             {windowSize > 500 && <img className={style} src={moreInfo} alt="more information"></img>}
         </div>
     )

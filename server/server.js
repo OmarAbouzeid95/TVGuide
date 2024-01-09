@@ -114,7 +114,7 @@ app.patch('/movies', async (req, res) => {
     try {
         const foundMovie = await Movie.findOne({movieId: id});
         let { reviews } = foundMovie;
-        reviews = reviews.filter(review => (review.email !== email) && (review.comment !== comment));
+        reviews = reviews.filter(review => !(review.email === email && review.comment === comment));
         const updatedMovie = await Movie.findOneAndUpdate({movieId: id}, {$set: {reviews}}, {new: true});
         res.status(200).json(updatedMovie);
     } catch(err) {
@@ -127,12 +127,10 @@ app.patch('/movies', async (req, res) => {
 app.patch('/movies/update', async (req, res) => {
 
     const { id, updates } = req.body;
-    console.log('id: ', id, '| updates: ', updates);
     try {
         const updatedMovie = await Movie.findOneAndUpdate({movieId:id}, {$set: updates}, {new: true});
         res.status(200).json(updatedMovie);    
     } catch(err) {
-        console.log('error: ', err);
         res.status(500).json({error: err});
     }
 });

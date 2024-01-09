@@ -34,7 +34,6 @@ export const deleteReview = async (id, email, comment) => {
         body: JSON.stringify(details)
     });
     const updatedMovie = await res.json();
-    console.log('updatedMovie: ', updatedMovie);
     return updatedMovie.reviews;
 
 };
@@ -53,6 +52,5 @@ export const updateReviews = async (id, updatedDetails) => {
         body: JSON.stringify(details)
     });
     const updatedMovie = await res.json();
-    console.log('updatedMovie: ', updatedMovie);
     return updatedMovie;
 };

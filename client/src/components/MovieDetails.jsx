@@ -10,8 +10,9 @@ import Review from './Review'
 import filledStar from "../media/star-filled.png"
 import unfilledStar from "../media/star-unfilled.png"
 import deleteIcon from "../media/delete.png"
+import defaultPoster from "../media/defaultPoster.png"
 
-import { useLoaderData, useLocation } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { userContext } from "../contexts/contexts";
 import { fetchRatingAndComments, addReview, deleteReview, updateReviews } from "../functions/dbFunctions"
 
@@ -24,10 +25,11 @@ export default function MovieDetails(){
     const [currentRating, setCurrentRating] = useState(0);
     const [currentReviews, setCurrentReviews] = useState([]);
     const location = useLocation();
+    const navigate = useNavigate();
     const { userData } = useContext(userContext);
 
-    const { cast, trailer: video } = useLoaderData();
-    const { id, title, description, rating: propRating, date, genres, poster } = location.state;
+    const { cast, trailer: video, id, title, description, rating: propRating, date, genres, poster: propPoster } = useLoaderData();
+    const poster = propPoster ? `${posterPath}/${propPoster}` : defaultPoster;
 
 
     useEffect(() => {
@@ -83,7 +85,11 @@ export default function MovieDetails(){
             /**
              * Close the movie details page and redirect to the signIn page
              */
-            console.log('no logged in user');
+            navigate('/signin', {
+                state: {
+                    pathname: location.pathname
+                }
+            });
         }else {
             /**
              * Check if Movie with this ID has details stored in the DB, if so then PATCH request, else it's a POST request 

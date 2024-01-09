@@ -1,5 +1,5 @@
 import { React, useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { userContext } from '../contexts/contexts'
 import Loader from './Loader'
 
@@ -8,9 +8,11 @@ export default function SignIn(){
     const [userInfo, setUserInfo] = useState({email: '', password: ''});
     const [signInStatus, setSignInStatus] = useState('');
     const [showLoader, setShowLoader] = useState(false);
-    const navigation = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const { setUserData } = useContext(userContext);
+    const { pathname } = location.state;
 
     // eslint-disable-next-line no-unused-vars
     function signIn(){
@@ -33,10 +35,14 @@ export default function SignIn(){
                 setShowLoader(false)
             } else {
                 // signed in successfully
-                setUserData(data)
-            sessionStorage.setItem('loggedUser', JSON.stringify(data));
-                setShowLoader(false)
-                navigation('/')
+                setUserData(data);
+                sessionStorage.setItem('loggedUser', JSON.stringify(data));
+                setShowLoader(false);
+                if(pathname) {
+                    navigate(pathname);
+                } else {
+                    navigate('/');
+                }
             }
         })
     }
@@ -58,7 +64,7 @@ export default function SignIn(){
                     }}>Sign in</button>
             </form>
             {showLoader && <Loader />}
-            <p className="form-account-msg">Don't have an account? <Link to={'/signup'}>Sign up</Link></p>
+            <p className="form-account-msg">Don't have an account? <Link to={'/signup'} state={{ pathname }}>Sign up</Link></p>
     </div>
     );
 }

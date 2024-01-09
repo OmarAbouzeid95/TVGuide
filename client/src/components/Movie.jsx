@@ -23,17 +23,8 @@ export default function Movie(props){
         title = props.title
     }
     return (
-        <div className = "movie-container" onClick = {() => navigate(`/show-details/${mode}/${props.title}/${props.id}`, {
-            state: {
-                title: props.title,
-                poster: props.poster,
-                description: props.description,
-                id: props.id,
-                genres: props.genres,
-                rating: props.rating,
-                date: props.date
-            }
-        })} 
+        <div className = "movie-container" onClick = {() => 
+            navigate(`/show-details/${mode}/${props.title}/${props.id}/${props.description}/${props.rating}/${props.date}/${props.genres}/${props.originalPosterPath.slice(1)}`)} 
             onMouseEnter={() => {
                 setImgStyle("hovered")
                 setStyle("show-more-details")

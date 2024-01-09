@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import Loader from './Loader'
 import { userContext } from '../contexts/contexts'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom'
 
 export default function SignUp(props){
     
@@ -9,7 +9,10 @@ export default function SignUp(props){
     const [signUpStatus, setSignUpStatus] = useState('');
     const [showLoader, setShowLoader] = useState(false);
     const { setUserData } = useContext(userContext);
-    const navigation = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { pathname } = location.state;
 
     function signUp(){
         /**
@@ -63,8 +66,12 @@ export default function SignUp(props){
                     .then(data => {
                         if (data.result === "success"){
                             setUserData(data.user);
-                            navigation('/');
                             setShowLoader(false);
+                            if(pathname) {
+                                navigate(pathname);
+                            } else {
+                                navigate('/');
+                            }
                         }else {
                             setSignUpStatus('Failed to sign up.')
                             setShowLoader(false)

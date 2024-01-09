@@ -61,6 +61,7 @@ export const mapMovies = (movies, movieList = 'all') => {
         return <Movie 
                     title = {movie?.title ?? movie?.name}
                     poster = {!movie?.poster_path ? defaultPoster : posterPath + movie?.poster_path}
+                    originalPosterPath = {movie?.poster_path}
                     id = {movie?.id}
                     rating = {movie?.vote_average.toFixed(1)}
                     date = {movie?.release_date}

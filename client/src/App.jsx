@@ -68,13 +68,13 @@ const App = () => {
           element: <UpcomingPage />
         },
         {
-          path: '/show-details/:mode/:title/:id',
+          path: '/show-details/:mode/:title/:id/:description/:rating/:date/:genres/:poster',
           element: <MovieDetails />,
           loader: async ({params}) => {
-            const { mode, id } = params;
+            const { mode, id, title, description, rating, date, genres, poster } = params;
             const cast = await fetchCast(mode, id);
             const trailer = await fetchTrailer(mode, id);
-            return { cast, trailer };
+            return { cast, trailer, id, title, description, rating, date, genres, poster };
           }
         },
         {

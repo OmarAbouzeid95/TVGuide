@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import Loader from './Loader'
 import { userContext } from '../contexts/contexts'
-import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 export default function SignUp(props){
     
@@ -12,7 +12,7 @@ export default function SignUp(props){
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { pathname } = location.state;
+    const pathname = location?.state?.pathname;
 
     function signUp(){
         /**
@@ -54,7 +54,6 @@ export default function SignUp(props){
                      * Create new user by POST request
                      */
                     const { firstName, lastName, email, password } = userInfo;
-                    console.log('userInfo: ', userInfo);
                     fetch(`${process.env.REACT_APP_SERVER_URL}/signUp`, {
                         method: "POST",
                         headers: {

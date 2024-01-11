@@ -6,6 +6,7 @@ require('dotenv').config();
 const Movie = require('./movie');
 const User = require('./user');
 const { connectToDb } = require('./db');
+const { findOneAndUpdate } = require('./movie');
 const app = express();
 
 
@@ -35,7 +36,7 @@ app.post('/signIn', async (req, res) => {
 // creating a new user
 app.post('/signUp', async (req, res) => {
 
-    const userData = req.body;
+    const userData = {...req.body, watchlist: []};
     try {
         const newUser = new User(userData);
         await newUser.save();
@@ -52,6 +53,31 @@ app.get('/user/:email', async (req, res) => {
     try {
         const user = await User.findOne({ email: userEmail });
         res.status(200).json(user);
+    } catch(err) {
+        res.status(500).json(err);
+    }
+});
+
+// add to wishlist
+app.patch('/user/add-to-watchlist', async (req, res) => {
+
+    const { email, id } = req.body;
+    try {
+        const updatedUser = await User.findOneAndUpdate({email}, {$push: {watchList: parseInt(id)}}, {new: true});
+        res.status(200).json(updatedUser);
+    } catch(err) {
+        res.status(500).json(err);
+    }
+});
+
+
+// remove from wishlist
+app.patch('/user/remove-from-watchlist', async (req, res) => {
+
+    const { email, id } = req.body;
+    try {
+        const updatedUser = await User.findOneAndUpdate({email}, {$pull: {watchList: parseInt(id)}}, {new: true});
+        res.status(200).json(updatedUser);
     } catch(err) {
         res.status(500).json(err);
     }

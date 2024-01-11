@@ -12,7 +12,7 @@ export default function SignIn(){
     const location = useLocation();
 
     const { setUserData } = useContext(userContext);
-    const { pathname } = location.state;
+    const pathname = location?.state?.pathname;
 
     // eslint-disable-next-line no-unused-vars
     function signIn(){
@@ -29,7 +29,6 @@ export default function SignIn(){
             body: JSON.stringify(userInfo)
         }).then(res => res.json())
         .then(data => {
-            console.log(data)
             if (!data) {
                 setSignInStatus('failed')
                 setShowLoader(false)

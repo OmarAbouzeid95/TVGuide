@@ -11,10 +11,11 @@ import filledStar from "../media/star-filled.png"
 import unfilledStar from "../media/star-unfilled.png"
 import deleteIcon from "../media/delete.png"
 import defaultPoster from "../media/defaultPoster.png"
+import plusIcon from "../media/plus.jpeg"
 
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { userContext } from "../contexts/contexts";
-import { fetchRatingAndComments, addReview, deleteReview, updateReviews } from "../functions/dbFunctions"
+import { fetchRatingAndComments, addReview, deleteReview, updateReviews, updateWatchList } from "../functions/dbFunctions"
 
 
 export default function MovieDetails(){
@@ -24,14 +25,14 @@ export default function MovieDetails(){
     const [review, setReview] = useState('');
     const [currentRating, setCurrentRating] = useState(0);
     const [currentReviews, setCurrentReviews] = useState([]);
+    const [watchList, setWatchList] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
-    const { userData } = useContext(userContext);
-
+    const { userData, setUserData } = useContext(userContext);
     const { cast, trailer: video, id, title, description, rating: propRating, date, genres, poster: propPoster } = useLoaderData();
     const poster = propPoster ? `${posterPath}/${propPoster}` : defaultPoster;
 
-
+    // comments and rating useEffect
     useEffect(() => {
         fetchRatingAndComments(id)
         .then(result => {
@@ -39,6 +40,13 @@ export default function MovieDetails(){
             setCurrentRating(result?.rating || 0.0);
         });
     }, [id]);
+
+    // watchlist useEffect
+    useEffect(() => {
+        if(userData?.watchList) {
+            setWatchList(userData.watchList);
+        }
+    }, [userData]);
 
     
     let allCast = cast.map(cast => {
@@ -74,6 +82,27 @@ export default function MovieDetails(){
     async function removeReview(id, email, review) {
         const updatedReviews = await deleteReview(id, email, review);
         setCurrentReviews(updatedReviews || []);
+    }
+
+    async function updateList(action) {
+        /**
+         * Check if user is signed in before updating movie details
+         */
+        if(!userData){
+            /**
+             * Close the movie details page and redirect to the signIn page
+             */
+            navigate('/signin', {
+                state: {
+                    pathname: location.pathname
+                }
+            });
+        }else {
+            const updatedWatchList = await updateWatchList(userData.email, id, action);
+            setUserData({...userData, watchList: updatedWatchList});
+            sessionStorage.setItem('loggedUser', JSON.stringify({...userData, watchList: updatedWatchList}));
+        }
+
     }
 
 
@@ -156,7 +185,16 @@ export default function MovieDetails(){
                         <p>{allGenres}</p>
                         <p className="movie-description">{description}</p>
                         <p className="movie-date">{date}</p>
-                        {!rating && <button className="rating-btn" onClick={() => setRating(true)}><img src={unfilledStar} alt="star icon" className="rating-icon rating-btn-icon"></img>Rate</button>}
+                        {!rating && 
+                        <div className="movieDetails-btns">
+                        <button className="rating-btn" onClick={() => setRating(true)}><img src={unfilledStar} alt="star icon" className="rating-icon rating-btn-icon"></img>Rate</button>
+                        {
+                            watchList.includes(parseInt(id)) ? 
+                            (<button className="watchlist-btn" onClick={() => updateList('remove')}><span><img src={deleteIcon} alt="delete icon" className="remove-icon rating-btn-icon"/></span> Remove from watchlist</button>) :
+                            (<button className="watchlist-btn" onClick={() => updateList('add')}><span><img src={plusIcon} alt="plus icon" className="add-icon rating-btn-icon"/></span> Add to watchlist</button>)
+                        } 
+                        </div>
+                        }
                     </div>
                 </div>
                 {rating &&
@@ -183,7 +221,7 @@ export default function MovieDetails(){
                         <button className="submitRating-btn" onClick={() => {
                             updateMovieDetails()
                             setRating(false)
-                            }}>Rate</button>
+                            }}>Rate</button>                                   
                     </div>}
                 
                 {(video !== '') && <div className="movieDetails-video">

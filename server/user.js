@@ -21,6 +21,10 @@ const userSchema = Schema({
         type: String,
         required: true
     },
+    watchList: {
+        type: Array,
+        required: true
+    }
 });
 
 

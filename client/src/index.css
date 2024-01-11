@@ -437,10 +437,19 @@ body {
   text-overflow: ellipsis;
 }
 
-.rating-icon {
+.rating-icon, .add-icon, .remove-icon {
   width: 15px;
-  margin-right: 0.25em;
+  margin: 0 0.25em 0 -0.5em;
 }
+
+.rating-icon {
+  margin-bottom: 0.2em;
+}
+
+.add-icon, .remove-icon {
+  margin-top: 0.1em;
+}
+
 
 .movie-rating {
   margin-top: 0.5em;
@@ -642,6 +651,10 @@ body {
   cursor:pointer;
 }
 
+.movieDetails-btns {
+  display: flex;
+}
+
 .submitRating-btn {
   margin-bottom: 1.5em;
   width: 60%;
@@ -656,22 +669,34 @@ body {
   border: 2px solid white;
 }
 
-.rating-btn {
+.watchlist-btn {
+  margin-left: 1em;
+}
+
+.rating-btn, .watchlist-btn {
   padding: 0.75em 1.5em;
   color: white;
   background-color:transparent;
   font-weight: bold;
   letter-spacing: 1px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   display: flex;
+  align-items: center;
   border-radius: 0.35em;
-  border: 2px solid white;
+  border: 1px solid white;
+}
+
+@media(max-width: 375px) {
+  .rating-btn, .watchlist-btn {
+    font-size: 0.9rem;
+  }
 }
 
 .rating-btn-icon{
   filter: invert(99%) sepia(0%) saturate(3667%) hue-rotate(206deg)
     brightness(116%) contrast(97%);
   width: 20px;
+  align-self: flex-start;
 }
 
 .add-watchlist {

@@ -56,20 +56,26 @@ export const fetchTrailer = async (mode, id) => {
     return '';
 };
 
-export const mapMovies = (movies, movieList = 'all') => {
-    return movies.map(movie => {
-        return <Movie 
-                    title = {movie?.title ?? movie?.name}
-                    poster = {!movie?.poster_path ? defaultPoster : posterPath + movie?.poster_path}
-                    originalPosterPath = {movie?.poster_path}
-                    id = {movie?.id}
-                    rating = {movie?.vote_average.toFixed(1)}
-                    date = {movie?.release_date}
-                    key = {movie?.id}
-                    genres = {movie?.genre_ids}
-                    description = {movie?.overview}
-                    movieList = {movieList}
+export const fetchDetails = async (mode, id) => {
+    const res = await fetch(`${baseUrl}/${mode}/${id}?api_key=${apiKey}&language=en-US`);
+    const data = await res.json();
+    return data;
 
-                />
-    });
+};
+
+export const mapMovies = (movies, movieList = 'all') => {
+    if(movies) {
+        return movies.map(movie => {
+            return <Movie 
+                        title = {movie?.title ?? movie?.name}
+                        poster = {!movie?.poster_path ? defaultPoster : posterPath + movie?.poster_path}
+                        id = {movie?.id}
+                        key = {movie?.id}
+                        movieList = {movieList}
+                    />
+        });
+    }else {
+        return [];
+    }
+    
 };

@@ -488,6 +488,16 @@ body {
   color: white;
 } */
 
+.empty-watchlist-container {
+  color: white;
+  text-align: center;
+  margin-top: 4em;
+}
+
+.empty-watchlist-container a {
+  color: white;
+}
+
 .movieDetails-container {
   color:white;
   padding: 4em;
@@ -1349,6 +1359,7 @@ fieldset {
 .footer-wrapper {
   border-top: 0.5px solid var(--secondary-color);
   padding: 1em 2em;
+  margin-top: 5em;
 }
 
 .footer-links-wrapper {

@@ -29,8 +29,16 @@ export default function MovieDetails(){
     const location = useLocation();
     const navigate = useNavigate();
     const { userData, setUserData } = useContext(userContext);
-    const { cast, trailer: video, id, title, description, rating: propRating, date, genres, poster: propPoster } = useLoaderData();
-    const poster = propPoster ? `${posterPath}/${propPoster}` : defaultPoster;
+    const { cast, trailer: video, id, title, overview, vote_average, release_date, genres, poster_path } = useLoaderData();
+    const poster = !poster_path ? defaultPoster : posterPath + poster_path;
+
+    const currentMovie = {
+        id,
+        title,
+        poster_path
+    };
+
+    const allGenres = genres.map(genre => ' ' + genre.name);
 
     // comments and rating useEffect
     useEffect(() => {
@@ -57,17 +65,17 @@ export default function MovieDetails(){
                     key = {cast.id}
                 />
     })
-    let allGenres = ''
+    // let allGenres = ''
 
-    for (let i=0; i<genres.length; i++){
-        for (let j=0; j<movieGenres.length; j++){
-            if (genres[i] === movieGenres[j].id){
-                allGenres += `${movieGenres[j].name}, `
-                break
-            }
-        }
-    }
-    allGenres = allGenres.substr(0, allGenres.length - 2)
+    // for (let i=0; i<genres.length; i++){
+    //     for (let j=0; j<movieGenres.length; j++){
+    //         if (genres[i] === movieGenres[j].id){
+    //             allGenres += `${movieGenres[j].name}, `
+    //             break
+    //         }
+    //     }
+    // }
+    // allGenres = allGenres.substr(0, allGenres.length - 2)
 
     let reviewId = 0
     let allReviews = currentReviews.map((review, index) => {
@@ -98,7 +106,7 @@ export default function MovieDetails(){
                 }
             });
         }else {
-            const updatedWatchList = await updateWatchList(userData.email, id, action);
+            const updatedWatchList = await updateWatchList(userData.email, currentMovie, action);
             setUserData({...userData, watchList: updatedWatchList});
             sessionStorage.setItem('loggedUser', JSON.stringify({...userData, watchList: updatedWatchList}));
         }
@@ -180,16 +188,16 @@ export default function MovieDetails(){
                 <div className="movieDetails-title-img">
                     <img className="movie-poster-dt" src={poster} alt="movie poster"></img>
                     <div>
-                        <p><span className="movie-details-title">{title}</span><span className="movie-rating"><img className="rating-icon" src={ratingIcon} alt="rating-icon"></img>{propRating}</span>
+                        <p><span className="movie-details-title">{title}</span><span className="movie-rating"><img className="rating-icon" src={ratingIcon} alt="rating-icon"></img>{vote_average.toFixed(1)}</span>
                         <span className="movie-rating"><img className="rating-icon logo-img" src={logo} alt="rating-icon"></img>{currentRating.toFixed(1)}</span></p>
                         <p>{allGenres}</p>
-                        <p className="movie-description">{description}</p>
-                        <p className="movie-date">{date}</p>
+                        <p className="movie-description">{overview}</p>
+                        <p className="movie-date">{release_date}</p>
                         {!rating && 
                         <div className="movieDetails-btns">
                         <button className="rating-btn" onClick={() => setRating(true)}><img src={unfilledStar} alt="star icon" className="rating-icon rating-btn-icon"></img>Rate</button>
                         {
-                            watchList.includes(parseInt(id)) ? 
+                            watchList.some(movie => movie.id === id) ? 
                             (<button className="watchlist-btn" onClick={() => updateList('remove')}><span><img src={deleteIcon} alt="delete icon" className="remove-icon rating-btn-icon"/></span> Remove from watchlist</button>) :
                             (<button className="watchlist-btn" onClick={() => updateList('add')}><span><img src={plusIcon} alt="plus icon" className="add-icon rating-btn-icon"/></span> Add to watchlist</button>)
                         } 

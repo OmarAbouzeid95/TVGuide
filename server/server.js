@@ -10,7 +10,7 @@ const { findOneAndUpdate } = require('./movie');
 const app = express();
 
 
-app.use(cors({ origin: process.env.FRONTEND_URL}));
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(express.json());
 
 const port = process.env.PORT || 6900;
@@ -61,9 +61,9 @@ app.get('/user/:email', async (req, res) => {
 // add to wishlist
 app.patch('/user/add-to-watchlist', async (req, res) => {
 
-    const { email, id } = req.body;
+    const { email, movie } = req.body;
     try {
-        const updatedUser = await User.findOneAndUpdate({email}, {$push: {watchList: parseInt(id)}}, {new: true});
+        const updatedUser = await User.findOneAndUpdate({email}, {$push: {watchList: movie}}, {new: true});
         res.status(200).json(updatedUser);
     } catch(err) {
         res.status(500).json(err);
@@ -74,9 +74,9 @@ app.patch('/user/add-to-watchlist', async (req, res) => {
 // remove from wishlist
 app.patch('/user/remove-from-watchlist', async (req, res) => {
 
-    const { email, id } = req.body;
+    const { email, movie } = req.body;
     try {
-        const updatedUser = await User.findOneAndUpdate({email}, {$pull: {watchList: parseInt(id)}}, {new: true});
+        const updatedUser = await User.findOneAndUpdate({email}, {$pull: {watchList: {id: movie.id}}}, {new: true});
         res.status(200).json(updatedUser);
     } catch(err) {
         res.status(500).json(err);

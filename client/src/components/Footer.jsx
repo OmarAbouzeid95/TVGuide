@@ -20,6 +20,7 @@ const Footer = () => {
                         <li className="footer-link"><Link to={`/top-rated/${mode}`} >Top Rated</Link></li>
                         <li className="footer-link"><Link to={`/upcoming/movie`} >Upcoming</Link></li>
                         <li className="footer-link"><Link to={'/trending'} >Trending</Link></li>
+                        <li className="footer-link"><Link to={'/watchlist'} >Watchlist</Link></li>
                         <li className="footer-link"><Link to={userData ? '/profile' : '/signin'}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link></li>
                     </ul>
                 </div>

@@ -1,13 +1,12 @@
-import React from "react"
 import moreInfo from "../media/more-info.png"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { modeContext } from "../contexts/contexts";
 
 export default function Movie(props){
-    const [style, setStyle] = React.useState("hide");
-    const [imgStyle, setImgStyle] = React.useState("");
-    const [windowSize, setWindowSize] = React.useState(window.innerWidth);
+    const [style, setStyle] = useState("hide");
+    const [imgStyle, setImgStyle] = useState("");
+    const [windowSize, setWindowSize] = useState(window.innerWidth);
     const { mode } = useContext(modeContext);
     const navigate = useNavigate();
 
@@ -17,7 +16,7 @@ export default function Movie(props){
 
     return (
         <div className = "movie-container" onClick = {() => 
-            navigate(`/show-details/${mode}/${props.title}/${props.id}/${props.description}/${props.rating}/${props.date}/${props.genres}/${props.originalPosterPath.slice(1)}`)} 
+            navigate(`/show-details/${mode}/${props.id}`)} 
             onMouseEnter={() => {
                 setImgStyle("hovered")
                 setStyle("show-more-details")

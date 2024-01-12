@@ -56,11 +56,11 @@ export const updateReviews = async (id, updatedDetails) => {
 };
 
 
-export const updateWatchList = async (email, id, action) => {
+export const updateWatchList = async (email, movie, action) => {
 
     const endpoint = action === 'remove' ? 'user/remove-from-watchlist' : 'user/add-to-watchlist'
     const body = {
-        email, id
+        email, movie
     };
     const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/${endpoint}`, {
         method: 'PATCH',

@@ -14,11 +14,12 @@ import SearchPage from './routes/SearchPage';
 import TopRatedPage from './routes/TopRatedPage';
 import UpcomingPage from './routes/UpcomingPage';
 import HomePage from './routes/HomePage';
+import WatchlistPage from './routes/WatchlistPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // functions
 import { searchMovies } from './functions/movieFunctions';
-import { fetchCast, fetchTrailer } from './functions/movieFunctions';
+import { fetchCast, fetchTrailer, fetchDetails } from './functions/movieFunctions';
 
 const App = () => {
 
@@ -68,13 +69,18 @@ const App = () => {
           element: <UpcomingPage />
         },
         {
-          path: '/show-details/:mode/:title/:id/:description/:rating/:date/:genres/:poster',
+          path: '/watchlist',
+          element: <WatchlistPage />
+        },
+        {
+          path: '/show-details/:mode/:id',
           element: <MovieDetails />,
           loader: async ({params}) => {
-            const { mode, id, title, description, rating, date, genres, poster } = params;
+            const { mode, id } = params;
             const cast = await fetchCast(mode, id);
             const trailer = await fetchTrailer(mode, id);
-            return { cast, trailer, id, title, description, rating, date, genres, poster };
+            const { genres, poster_path, release_date, title, overview, vote_average } = await fetchDetails(mode, id);
+            return { cast, trailer, id, genres, poster_path, release_date, title, overview, vote_average };
           }
         },
         {

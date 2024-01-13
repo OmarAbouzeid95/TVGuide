@@ -1,9 +1,11 @@
 import { useEffect, useContext, useState } from 'react';
 import { entertainmentContext, modeContext } from '../contexts/contexts';
-import Caroussel from '../components/Caroussel';
 import { baseUrl, apiKey } from '../info';
 import { mapMovies } from '../functions/movieFunctions';
 import Loader from '../components/Loader';
+
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const HomePage = () => {
 
@@ -149,16 +151,50 @@ const HomePage = () => {
 
     const carousselContent = (title, list) => {
 
+        const responsive = {
+            superLargeDesktop: {
+              breakpoint: { max: 4000, min: 1360 },
+              items: 7
+            },
+            largeDesktop: {
+                breakpoint: { max: 1359, min: 1120 },
+                items: 6
+            },
+            desktop: {
+              breakpoint: { max: 1119, min: 1024 },
+              items: 5
+            },
+            tablet: {
+              breakpoint: { max: 1023, min: 769 },
+              items: 4
+            },
+            largeMobile: {
+              breakpoint: { max: 768, min: 426 },
+              items: 3
+            },
+            mobile: {
+              breakpoint: { max: 425, min: 0 },
+              items: 2
+            }
+          };
+
         return (
             <div key={title}>
                 <h2 className="genre-header">{title.charAt(0).toUpperCase() + title.slice(1)}</h2>
-                <Caroussel movieList={list}/>
+                <Carousel 
+                    responsive={responsive}
+                    infinite={true}
+                    swipeable={true}
+                    draggable={true}
+                >
+                    {list}
+                </Carousel>
             </div>
         );
     };
 
   return (
-    <div>
+    <div className="movies-container-wrapper">
         { allResults ?? <Loader style={{height: '70vh'}}/> }
     </div>
   );

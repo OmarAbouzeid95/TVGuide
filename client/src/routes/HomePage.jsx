@@ -5,15 +5,11 @@ import { baseUrl, apiKey } from '../info';
 import { mapMovies } from '../functions/movieFunctions';
 import Loader from '../components/Loader';
 
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-
 const HomePage = () => {
 
     const { entertainmentData, setEntertainmentData } = useContext(entertainmentContext);
     const { mode } = useContext(modeContext);
     const [ allResults, setAllResults ] = useState();
-    const [ visibleItems, setVisibleItems ] = useState(3);
 
     const fetchEntertainmentContent = async () => {
 
@@ -124,25 +120,6 @@ const HomePage = () => {
         return entertainmentContent;
     };
 
-    const updateVisibleItems = () => {
-        const windowSize = window.innerWidth;
-        const itemsCount = windowSize / 180;
-        setVisibleItems(itemsCount)
-    };
-
-    useEffect(() => {
-
-        updateVisibleItems();
-        // Add event listener
-        window.addEventListener('resize', updateVisibleItems);
-
-        // Remove event listener on cleanup
-        return () => {
-            window.removeEventListener('resize', updateVisibleItems);
-        };
-    }, []);
-    
-
     useEffect(() => {
         /*
         res = await fetching movies and tv by genre to display on the homepage
@@ -172,36 +149,10 @@ const HomePage = () => {
 
     const carousselContent = (title, list) => {
 
-        // const responsive = {
-        //     superLargeDesktop: {
-        //         breakpoint: { max: 4000, min: 3000 },
-        //         items: visibleItems
-        //       },
-        //       desktop: {
-        //         breakpoint: { max: 3000, min: 1024 },
-        //         items: visibleItems
-        //       },
-        //       tablet: {
-        //         breakpoint: { max: 1024, min: 464 },
-        //         items: visibleItems
-        //       },
-        //       mobile: {
-        //         breakpoint: { max: 464, min: 0 },
-        //         items: visibleItems
-        //       }
-        // };
-
         return (
             <div key={title}>
                 <h2 className="genre-header">{title.charAt(0).toUpperCase() + title.slice(1)}</h2>
                 <Caroussel movieList={list}/>
-                {/* <Carousel 
-                    responsive={responsive}
-                    draggable={true}
-                    swipable={true}
-                >
-                    {list}
-                </Carousel> */}
             </div>
         );
     };

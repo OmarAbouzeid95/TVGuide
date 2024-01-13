@@ -146,8 +146,7 @@ body {
   margin-right: 1em;
 }
 
-.header-search-bar, .signIn-wrapper input, .profile-wrapper input,
-.reviewInput-field {
+.header-search-bar, .signIn-wrapper input,.reviewInput-field {
   width: 100%;
   padding: 0.35em 3.5em 0.35em 0;
   font-size: 1em;
@@ -800,6 +799,7 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   color: white;
+  border-radius: 5px;
 }
 
 .submitReview-btn, .deleteReview-btn {
@@ -818,24 +818,106 @@ body {
 /* Profile */
 
 .profile-wrapper {
-  max-width: 320px;
-  margin: 2em auto;
+  display: flex;
+}
+
+.profile-outlet, .policy-outlet {
+  justify-self: center;
+  width: 100%;
+  color: white;
+  padding: 2.5em 2em;
+}
+
+.profile-outlet-content, .policy-outlet-content {
+  max-width: 500px;
+  margin: auto;
+  padding: 1.5em 1.5em 3.5em 1.5em;
+  background-color: #22252e;
+  border-radius: 1em;
+}
+
+.policy-outlet-content {
+  line-height: 25px;
+}
+
+.policy-subheading {
+  font-weight: bold;
+}
+
+.profile-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  background-color: #22252e;
+  font-weight: bold;
   color: white;
 }
 
-.profile-wrapper .disabled-input {
-  background-color: lightgray;
-  color: grey;
+.profile-links-wrapper button{
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  padding: 0;
 }
 
-fieldset {
+
+.profile-link {
+  margin-top: 1em;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+
+}
+
+.profile-link:hover {
+  cursor: pointer;
+}
+
+.profile-link-icon {
+  margin-right: 0.5em;
+}
+
+/* Account details */
+
+.input-container {
+  color: white;
+  padding: 1.5em 0 0.15em 0;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.input-container label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.input-wrapper { 
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-wrapper input {
+  font-size: 1rem;
+}
+
+.input-wrapper input:disabled {
+  background-color: transparent;
+  border-color: transparent;
+  color: white;
+}
+
+.account-details-edit {
+  text-decoration: underline;
+  background-color: transparent;
+  color: white;
   border: none;
 }
 
-.profileBtns-wrapper {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 0.35em;
+.account-details-edit:hover {
+  cursor: pointer;
 }
 
 /* Movies details end */
@@ -926,8 +1008,14 @@ fieldset {
   margin: 0;
 }
 
-.pw-rules {
+.pw-rules p{
   text-align: left;
+  margin: 0.10em;
+}
+
+.pw-rules #title {
+  font-weight: bold;
+  text-align: center;
 }
 
 .movie-name-span {
@@ -1359,7 +1447,6 @@ fieldset {
 .footer-wrapper {
   border-top: 0.5px solid var(--secondary-color);
   padding: 1em 2em;
-  margin-top: 5em;
 }
 
 .footer-links-wrapper {

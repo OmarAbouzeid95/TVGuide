@@ -1,11 +1,11 @@
 import '../App.css';
 import {useState} from "react";
 import Header from '../components/Header';
-import Breadcrumbs from '../components/Breadcrumbs';
 import Footer from '../components/Footer';
 
 import { modeContext, userContext, entertainmentContext } from '../contexts/contexts';
 import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 function Root() {
 
@@ -20,7 +20,7 @@ function Root() {
         <entertainmentContext.Provider value={{ entertainmentData, setEntertainmentData }}>
           <modeContext.Provider value={{ mode, setMode }}>
             <Header />
-            <Breadcrumbs />
+            {/* <ToastContainer /> */}
             <Outlet />
             <Footer />
           </modeContext.Provider>

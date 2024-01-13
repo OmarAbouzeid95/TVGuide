@@ -71,7 +71,7 @@ export default function Header(){
                             toggleNavShow()
                         }}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
                         <Link className="mobile-nav-btn" to={'/watchlist'} onClick={toggleNavShow}>Watchlist</Link>
-                        <Link className="mobile-nav-btn" to={userData ? '/profile' : '/signin'} onClick={toggleNavShow}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
+                        <Link className="mobile-nav-btn" to={userData ? '/profile/account-details' : '/signin'} onClick={toggleNavShow}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@ export default function Header(){
                         <Dropdown />
                         <button className="header-nav-button" onClick = {toggleMode}>{mode === 'movie' ? "Explore TV" : "Explore Movies"}</button>
                         <Link className="header-nav-button" to={'/watchlist'}>Watchlist</Link>
-                        <Link className="header-nav-button" to={userData ? '/profile' : '/signin'}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
+                        <Link className="header-nav-button" to={userData ? '/profile/account-details' : '/signin'}>{userData ? `Hi, ${userData.firstName}` : 'Sign In'}</Link>
                     </div>
                     {headerData}
                 </div>

@@ -5,6 +5,8 @@ import Root from './routes/Root';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import MovieDetails from './components/MovieDetails';
+import AccountDetails from './components/AccountDetails';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 // routes
 import ErrorPage from './routes/ErrorPage';
@@ -15,11 +17,15 @@ import TopRatedPage from './routes/TopRatedPage';
 import UpcomingPage from './routes/UpcomingPage';
 import HomePage from './routes/HomePage';
 import WatchlistPage from './routes/WatchlistPage';
+import ProfilePage from './routes/ProfilePage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // functions
 import { searchMovies } from './functions/movieFunctions';
 import { fetchCast, fetchTrailer, fetchDetails } from './functions/movieFunctions';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
@@ -84,8 +90,22 @@ const App = () => {
           }
         },
         {
+          path: '/profile',
+          element: <ProfilePage />,
+          children: [
+            {
+              path: '/profile/account-details',
+              element: <AccountDetails/>
+            },
+            {
+              path: '/profile/privacy',
+              element: <PrivacyPolicy/>
+            }
+          ]
+        },
+        {
           path: '*',
-          element: <ErrorPage />
+          element: <ErrorPage />,
         }
       ]
     },
@@ -94,6 +114,7 @@ const App = () => {
   return (
     <div>
         <RouterProvider router={router} />
+        <ToastContainer />
     </div>
   );
   

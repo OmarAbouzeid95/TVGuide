@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { userContext } from '../contexts/contexts'
 import Loader from './Loader'
 
+import { toast } from 'react-toastify';
+
 export default function SignIn(){
     
     const [userInfo, setUserInfo] = useState({email: '', password: ''});
@@ -36,6 +38,11 @@ export default function SignIn(){
                 // signed in successfully
                 setUserData(data);
                 sessionStorage.setItem('loggedUser', JSON.stringify(data));
+                toast.success(`Welcome, ${data.firstName}`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 2500,
+                    theme: 'dark'
+                });
                 setShowLoader(false);
                 if(pathname) {
                     navigate(pathname);

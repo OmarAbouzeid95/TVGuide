@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react'
-import Loader from './Loader'
-import { userContext } from '../contexts/contexts'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useState, useContext } from 'react';
+import Loader from './Loader';
+import { userContext } from '../contexts/contexts';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function SignUp(props){
     
@@ -32,12 +33,14 @@ export default function SignUp(props){
             setShowLoader(false)
         }
         else if(!isPassword(userInfo.password)){
-            setSignUpStatus(<span className="pw-rules">Password needs to match these rules: <br></br>
-                           - Minimum eight characters <br></br>
-                           - At least one uppercase letter <br></br>
-                           - At least one lowercase letter <br></br>
-                           - One number <br></br>
-                           - One special character</span>)  
+            setSignUpStatus(<div className="pw-rules">
+                                <p id="title">Password needs to match these rules: </p>
+                                <p>- Minimum eight characters</p>
+                                <p>- At least one uppercase letter</p>
+                                <p>- At least one lowercase letter</p>
+                                <p>- One number</p>
+                                <p>- One special character</p>
+                            </div>)  
             setShowLoader(false)           
         }else if(userInfo.password !== userInfo.repassword){
             setSignUpStatus("Passwords don't match")
@@ -53,7 +56,10 @@ export default function SignUp(props){
                     /**
                      * Create new user by POST request
                      */
-                    const { firstName, lastName, email, password } = userInfo;
+                    let { firstName, lastName, email, password } = userInfo;
+                    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+                    lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+                    email = email.toLowerCase();
                     fetch(`${process.env.REACT_APP_SERVER_URL}/signUp`, {
                         method: "POST",
                         headers: {
@@ -65,6 +71,12 @@ export default function SignUp(props){
                     .then(data => {
                         if (data.result === "success"){
                             setUserData(data.user);
+                            sessionStorage.setItem('loggedUser', JSON.stringify(data.user));
+                            toast.success(`Welcome, ${data.user.firstName}`, {
+                                position: toast.POSITION.TOP_RIGHT,
+                                autoClose: 2500,
+                                theme: 'dark'
+                            });
                             setShowLoader(false);
                             if(pathname) {
                                 navigate(pathname);

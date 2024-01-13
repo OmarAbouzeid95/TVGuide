@@ -84,26 +84,6 @@ app.patch('/user/remove-from-watchlist', async (req, res) => {
 });
 
 
-// // updating user info
-// app.patch('/updateUser', (req, res) => {
-
-//     db.collection('users')
-//         .updateOne({ email: req.body.oldEmail }, {
-//             $set: {
-//                 email: req.body.email,
-//                 firstName: req.body.firstName,
-//                 lastName: req.body.lastName,
-//                 password: req.body.password
-//             }
-//         })
-//         .then(() => {
-//             res.status(200).json({ result: 'success' })
-//         })
-//         .catch(error => {
-//             res.status(500).json({ result: 'failed' })
-//         })
-// })
-
 // fetching movie reviews from the DB
 app.get('/movies/:id', async (req, res) => {
 
@@ -156,6 +136,18 @@ app.patch('/movies/update', async (req, res) => {
     try {
         const updatedMovie = await Movie.findOneAndUpdate({movieId:id}, {$set: updates}, {new: true});
         res.status(200).json(updatedMovie);    
+    } catch(err) {
+        res.status(500).json({error: err});
+    }
+});
+
+// deleting user
+app.delete('/user/delete', async (req, res) => {
+
+    try {
+        const deletedUser = await User.deleteOne({email: req.body.email});
+        console.log('deleted User: ', deletedUser);
+        res.status(200).json(deletedUser);
     } catch(err) {
         res.status(500).json({error: err});
     }

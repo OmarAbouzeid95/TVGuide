@@ -24,6 +24,10 @@ const userSchema = Schema({
     watchList: {
         type: Array,
         required: true
+    },
+    reviews: {
+        type: Array,
+        required: true
     }
 });
 

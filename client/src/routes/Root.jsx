@@ -5,7 +5,9 @@ import Footer from '../components/Footer';
 
 import { modeContext, userContext, entertainmentContext } from '../contexts/contexts';
 import { Outlet } from 'react-router-dom';
+
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Root() {
 
@@ -20,7 +22,7 @@ function Root() {
         <entertainmentContext.Provider value={{ entertainmentData, setEntertainmentData }}>
           <modeContext.Provider value={{ mode, setMode }}>
             <Header />
-            {/* <ToastContainer /> */}
+            <ToastContainer />
             <Outlet />
             <Footer />
           </modeContext.Provider>

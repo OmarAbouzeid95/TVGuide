@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import MovieDetails from './components/MovieDetails';
 import AccountDetails from './components/AccountDetails';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import UserReviews from './components/UserReviews';
 
 // routes
 import ErrorPage from './routes/ErrorPage';
@@ -23,9 +24,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // functions
 import { searchMovies } from './functions/movieFunctions';
 import { fetchCast, fetchTrailer, fetchDetails } from './functions/movieFunctions';
-
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
@@ -100,6 +98,10 @@ const App = () => {
             {
               path: '/profile/privacy',
               element: <PrivacyPolicy/>
+            },
+            {
+              path: '/profile/user-reviews',
+              element: <UserReviews/>
             }
           ]
         },
@@ -114,7 +116,6 @@ const App = () => {
   return (
     <div>
         <RouterProvider router={router} />
-        <ToastContainer />
     </div>
   );
   

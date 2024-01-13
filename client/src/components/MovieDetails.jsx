@@ -1,6 +1,6 @@
 import {useState, useContext, useEffect} from "react"
 import Cast from "./Cast"
-import { posterPath, movieGenres } from "../info"
+import { posterPath } from "../info"
 import unknownUser from "../media/unknownUser.jpeg"
 import closeIcon from "../media/close-icon.png"
 import ratingIcon from "../media//rating-icon.png"
@@ -15,7 +15,9 @@ import plusIcon from "../media/plus.jpeg"
 
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { userContext } from "../contexts/contexts";
-import { fetchRatingAndComments, addReview, deleteReview, updateReviews, updateWatchList } from "../functions/dbFunctions"
+import { fetchRatingAndComments, addReview, deleteReview, updateReviews, updateWatchList } from "../functions/dbFunctions";
+import { updateUser } from "../functions/userFunctions";
+import { toast } from "react-toastify";
 
 
 export default function MovieDetails(){
@@ -38,7 +40,7 @@ export default function MovieDetails(){
         poster_path
     };
 
-    const allGenres = genres.map(genre => ' ' + genre.name);
+    const allGenres = genres.map(genre => ', ' + genre.name).join('').slice(2);
 
     // comments and rating useEffect
     useEffect(() => {
@@ -65,17 +67,7 @@ export default function MovieDetails(){
                     key = {cast.id}
                 />
     })
-    // let allGenres = ''
-
-    // for (let i=0; i<genres.length; i++){
-    //     for (let j=0; j<movieGenres.length; j++){
-    //         if (genres[i] === movieGenres[j].id){
-    //             allGenres += `${movieGenres[j].name}, `
-    //             break
-    //         }
-    //     }
-    // }
-    // allGenres = allGenres.substr(0, allGenres.length - 2)
+    
 
     let reviewId = 0
     let allReviews = currentReviews.map((review, index) => {
@@ -83,7 +75,10 @@ export default function MovieDetails(){
                        comment = {review.comment}
                        key = {reviewId++}/>
                        {(userData) && (review.email === userData.email) && <img className="deleteReview-btn" alt="delete icon" src={deleteIcon}
-                                                                                                onClick={() => removeReview(id, review.email, review.comment)}></img>}
+                                                                                                onClick={() => {
+                                                                                                    removeReview(id, review.email, review.comment);
+                                                                                                    removeUserReview(review.comment);
+                                                                                                }}></img>}
                 </div>       
     })
 
@@ -153,11 +148,18 @@ export default function MovieDetails(){
                     ratingTotal,
                     reviews
                 };
-                const { rating: updatedRating, reviews: updatedReviews } = await updateReviews(id, body);
-                setCurrentRating(updatedRating || 0.0);
-                setCurrentReviews(updatedReviews || []);
-                setReview('');
-                setStars(0);
+                const { rating: updatedRating, reviews: updatedReviews, err } = await updateReviews(id, body);
+                if(err) {
+                    toast.error('Something went wrong', {
+                        autoClose: 3000,
+                        theme: 'dark'
+                    });
+                } else {
+                    setCurrentRating(updatedRating || 0.0);
+                    setCurrentReviews(updatedReviews || []);
+                    setStars(0);
+                }
+                
             }else {
                 // POST request
                 const body = {
@@ -170,16 +172,61 @@ export default function MovieDetails(){
                         name: userData.firstName + ' ' + userData.lastName,
                         email: userData.email,
                         comment: review.trim()
-                     }]
+                     }],
+                    ...currentMovie
                 };
+                console.log('body: ', body);
                 const res = await addReview(body);
-                const { rating, reviews } = res;
-                setCurrentRating(rating || 0.0);
-                setCurrentReviews(reviews || []);
-                setReview('');
-                setStars(0);
+                const { rating, reviews, err } = res;
+                if(err) {
+                    toast.error('Something went wrong', {
+                        autoClose: 3000,
+                        theme: 'dark'
+                    });
+                } else {
+                    setCurrentRating(rating || 0.0);
+                    setCurrentReviews(reviews || []);
+                    setStars(0);
+                }
+                
             }
         }
+    };
+
+    async function addUserReview() {
+
+        if(review.trim() !== '') {
+            const res = await updateUser(userData.email, {...currentMovie, comment: review.trim()}, 'add-review');
+            if(res.err) {
+                toast.error('Something went wrong', {
+                    autoClose: 3000,
+                    theme: 'dark'
+                });
+            } else {
+                const updatedUser = res;
+                setUserData(updatedUser);
+                sessionStorage.setItem('loggedUser', JSON.stringify(updatedUser));
+            }
+            setReview('');  
+        }
+
+    };
+
+    async function removeUserReview(comment) {
+
+        const res = await updateUser(userData.email, {...currentMovie, comment}, 'delete-review');
+        if(res.err) {
+            toast.error('Something went wrong', {
+                autoClose: 3000,
+                theme: 'dark'
+            });
+        } else {
+            const updatedUser = res;
+            setUserData(updatedUser);
+            sessionStorage.setItem('loggedUser', JSON.stringify(updatedUser));
+        }
+        setReview('');  
+
     };
 
     return (
@@ -245,11 +292,15 @@ export default function MovieDetails(){
                     <div className="reviewInput-wrapper">
                         <textarea className="reviewInput-field" placeholder="Write a review..." value = {review} onChange={(e) => setReview(e.target.value)} onKeyDown={(e) => {
                                                                                                                                             if(e.key === 'Enter'){
-                                                                                                                                            updateMovieDetails()
-                                                                                                                                            if(e.repeat)
-                                                                                                                                                return
+                                                                                                                                                updateMovieDetails();
+                                                                                                                                                addUserReview();
+                                                                                                                                                if(e.repeat)
+                                                                                                                                                 return;
                                                                                                                                             }}}></textarea>
-                        <img src={send} alt="submit review icon" className="submitReview-btn" onClick={() => updateMovieDetails()}/>
+                        <img src={send} alt="submit review icon" className="submitReview-btn" onClick={() => {
+                            updateMovieDetails();
+                            addUserReview();
+                        }}/>
                     </div>
                     {allReviews}
                 </div>

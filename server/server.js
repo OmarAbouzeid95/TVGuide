@@ -146,10 +146,48 @@ app.delete('/user/delete', async (req, res) => {
 
     try {
         const deletedUser = await User.deleteOne({email: req.body.email});
-        console.log('deleted User: ', deletedUser);
         res.status(200).json(deletedUser);
     } catch(err) {
         res.status(500).json({error: err});
     }
+});
+
+// updating user info
+app.patch('/user/update', async (req, res) => {
+
+    try{
+        const { email, updates } = req.body;
+        const updatedUser = await User.findOneAndUpdate({email}, {$set: {updates}}, {new: true});
+        res.status(200).json(updatedUser);
+    } catch(err) {
+        res.status(500).json({error: err}); 
+    }
+
+});
+
+// adding user reviews
+app.patch('/user/add-review', async (req, res) => {
+
+    try{
+        const { email, updates } = req.body;
+        const updatedUser = await User.findOneAndUpdate({email}, {$push: {reviews: updates}}, {new: true});
+        res.status(200).json(updatedUser);
+    } catch(err) {
+        res.status(500).json({error: err}); 
+    }
+
+});
+
+// deleting user reviews
+app.patch('/user/delete-review', async (req, res) => {
+
+    try{
+        const { email, updates } = req.body;
+        const updatedUser = await User.findOneAndUpdate({email}, {$pull: {reviews: updates}}, {new: true});
+        res.status(200).json(updatedUser);
+    } catch(err) {
+        res.status(500).json({error: err}); 
+    }
+
 });
 

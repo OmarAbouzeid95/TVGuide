@@ -588,6 +588,10 @@ body {
   display: flex;
 }
 
+.user-review-container {
+  border-bottom: 1px solid var(--secondary-color);
+}
+
 .movie-poster-dt {
   border-radius: 0.5em;
   margin: 1.2em 2.5em 0 0;
@@ -821,19 +825,49 @@ body {
   display: flex;
 }
 
-.profile-outlet, .policy-outlet {
+.profile-outlet,
+.policy-outlet,
+.reviews-outlet {
   justify-self: center;
   width: 100%;
   color: white;
   padding: 2.5em 2em;
 }
 
-.profile-outlet-content, .policy-outlet-content {
-  max-width: 500px;
+.profile-outlet-content,
+.policy-outlet-content,
+.reviews-outlet-content {
+  max-width: 550px;
   margin: auto;
   padding: 1.5em 1.5em 3.5em 1.5em;
   background-color: #22252e;
   border-radius: 1em;
+}
+
+.user-review-container {
+  display: flex;
+  padding-bottom: 1em;
+  width: 100%;
+}
+
+.user-review-info h3 {
+  margin-bottom: 1.5em;
+}
+
+.user-review-info h4 {
+  margin-bottom: 0.1em;
+}
+
+.user-review-info button {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  color: white;
+  font-size: 1rem;
+}
+
+.user-review-info button:hover{ 
+  cursor: pointer;
 }
 
 .policy-outlet-content {

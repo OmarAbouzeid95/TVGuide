@@ -9,6 +9,14 @@ const movieSchema = Schema({
         unique: true,
         required: true
     },
+    title: {
+        type: String,
+        required: true
+    },
+    poster_path: {
+        type: String,
+        required: true
+    },
     rating: {
         type: Number,
         required: true,

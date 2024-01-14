@@ -31,12 +31,12 @@ export default function MovieDetails(){
     const location = useLocation();
     const navigate = useNavigate();
     const { userData, setUserData } = useContext(userContext);
-    const { cast, trailer: video, id, title, overview, vote_average, release_date, genres, poster_path } = useLoaderData();
+    const { cast, trailer: video, id, title, overview, vote_average, release_date, genres, poster_path, name } = useLoaderData();
     const poster = !poster_path ? defaultPoster : posterPath + poster_path;
 
     const currentMovie = {
         id,
-        title,
+        title: title ?? name,
         poster_path
     };
 
@@ -148,8 +148,8 @@ export default function MovieDetails(){
                     ratingTotal,
                     reviews
                 };
-                const { rating: updatedRating, reviews: updatedReviews, err } = await updateReviews(id, body);
-                if(err) {
+                const { rating: updatedRating, reviews: updatedReviews, error } = await updateReviews(id, body);
+                if(error) {
                     toast.error('Something went wrong', {
                         autoClose: 3000,
                         theme: 'dark'
@@ -175,10 +175,9 @@ export default function MovieDetails(){
                      }],
                     ...currentMovie
                 };
-                console.log('body: ', body);
                 const res = await addReview(body);
-                const { rating, reviews, err } = res;
-                if(err) {
+                const { rating, reviews, error } = res;
+                if(error) {
                     toast.error('Something went wrong', {
                         autoClose: 3000,
                         theme: 'dark'
@@ -197,7 +196,7 @@ export default function MovieDetails(){
 
         if(review.trim() !== '') {
             const res = await updateUser(userData.email, {...currentMovie, comment: review.trim()}, 'add-review');
-            if(res.err) {
+            if(res.error) {
                 toast.error('Something went wrong', {
                     autoClose: 3000,
                     theme: 'dark'
@@ -215,7 +214,7 @@ export default function MovieDetails(){
     async function removeUserReview(comment) {
 
         const res = await updateUser(userData.email, {...currentMovie, comment}, 'delete-review');
-        if(res.err) {
+        if(res.error) {
             toast.error('Something went wrong', {
                 autoClose: 3000,
                 theme: 'dark'
@@ -235,7 +234,7 @@ export default function MovieDetails(){
                 <div className="movieDetails-title-img">
                     <img className="movie-poster-dt" src={poster} alt="movie poster"></img>
                     <div>
-                        <p><span className="movie-details-title">{title}</span><span className="movie-rating"><img className="rating-icon" src={ratingIcon} alt="rating-icon"></img>{vote_average.toFixed(1)}</span>
+                        <p><span className="movie-details-title">{title ?? name}</span><span className="movie-rating"><img className="rating-icon" src={ratingIcon} alt="rating-icon"></img>{vote_average.toFixed(1)}</span>
                         <span className="movie-rating"><img className="rating-icon logo-img" src={logo} alt="rating-icon"></img>{currentRating.toFixed(1)}</span></p>
                         <p>{allGenres}</p>
                         <p className="movie-description">{overview}</p>
@@ -283,7 +282,7 @@ export default function MovieDetails(){
                     {/*eslint-disable-next-line jsx-a11y/iframe-has-title*/}
                     <iframe width="750" height="450" src={video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"/>
                 </div>}
-                <h2 className="cast-header">Cast</h2>
+                {(allCast.length > 0) && <h2 className="cast-header">Cast</h2>}
                 <div className = "movieDetails-cast">
                     {allCast}
                 </div>

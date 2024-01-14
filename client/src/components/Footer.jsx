@@ -42,7 +42,7 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
-            <p className="copy-right">© 2023 Tv Guide. All rights reserved</p>
+            <p className="copy-right">© 2023 WatchFlex. All rights reserved</p>
         </div>  
     );
 }

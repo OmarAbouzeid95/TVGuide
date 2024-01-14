@@ -33,14 +33,6 @@ export default function Header(){
         }
     }, [mode, text, navigate]);
 
-    // Enter keypress listener
-    useEffect(() => {
-        const addListener = () => window.addEventListener('keypress', searchTextTerm);
-        const removeListener = () => window.removeEventListener('keypress', searchTextTerm);
-        addListener();
-        return removeListener;
-    }, [searchTextTerm]);
-
     useEffect(()=> {
         function toggleNavShow(){
             setNavShow(prevNavShow => !prevNavShow)
@@ -90,13 +82,13 @@ export default function Header(){
                     <Link className="main-logo-link" to={'/'}>
                         <div className="main-logo">
                             <img className="logo-img" src={logo} alt="website logo"></img>
-                            <h2>TV Guide</h2>
+                            <h2>WatchFlex</h2>
                         </div>
                     </Link>
                     <div className="header-nav-buttons">
                         <div className="header-search-container">
                             <div className="header-searchbar-container">
-                                <input className="header-search-bar" type="text" onChange={(e) => setText(e.target.value)} value={text}/>
+                                <input className="header-search-bar" type="text" onChange={(e) => setText(e.target.value)} onKeyDown={searchTextTerm} value={text}/>
                                 <div className="searchbar-icons">
                                     {text !== "" && <img className="clear-icon" src={closeIcon} alt="clear icon" onClick={() => setText("")}></img>}
                                     <img className="search-icon" src={magnifyingGlass} alt="search icon" onClick={() => searchTextTerm({key: 'Enter'})}/>

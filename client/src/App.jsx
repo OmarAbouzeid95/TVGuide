@@ -83,8 +83,8 @@ const App = () => {
             const { mode, id } = params;
             const cast = await fetchCast(mode, id);
             const trailer = await fetchTrailer(mode, id);
-            const { genres, poster_path, release_date, title, overview, vote_average } = await fetchDetails(mode, id);
-            return { cast, trailer, id, genres, poster_path, release_date, title, overview, vote_average };
+            const { genres, poster_path, release_date, title, overview, vote_average, name } = await fetchDetails(mode, id);
+            return { cast, trailer, id, genres, poster_path, release_date, title, overview, vote_average, name };
           }
         },
         {

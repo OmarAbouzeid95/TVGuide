@@ -3,8 +3,7 @@ import { userContext } from "../contexts/contexts";
 import { Link } from "react-router-dom";
 import { posterPath } from "../info";
 import defaultPoster from "../media/defaultPoster.png";
-import Review from "./Review";
-import deleteIcon from "../media/delete.png";
+
 
 import { deleteReview } from "../functions/dbFunctions";
 import { updateUser } from "../functions/userFunctions";
@@ -48,7 +47,7 @@ const UserReviews = () => {
                 (
                     <div style={{textAlign:'center'}}>
                         <h2>You don't have any reviews yet.</h2>
-                        <p>Head to <Link style={{color:'white'}} to={'/'}>Explore</Link></p>
+                        <h3>Head to <Link style={{color:'white'}} to={'/'}>Explore</Link></h3>
                     </div>
                 ) :
                 (

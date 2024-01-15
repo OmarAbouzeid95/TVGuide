@@ -403,6 +403,7 @@ body {
 
 .modal-wrapper {
   position: absolute;
+  z-index: 999;
   top: 0;
   bottom: 0;
   left: 0;
@@ -893,7 +894,10 @@ body {
   padding: 2.5em 2em;
   height: 70vh;
   overflow-y: scroll;
-  scrollbar-base-color: transparent;
+}
+
+.profile-outlet {
+  position: relative;
 }
 
 .profile-outlet-content,
@@ -996,12 +1000,21 @@ body {
 
 .input-wrapper input {
   font-size: 1rem;
-}
-
-.input-wrapper input:disabled {
   background-color: transparent;
   border-color: transparent;
   color: white;
+  width: 100%;
+}
+
+
+
+.input-wrapper input:disabled,
+.input-wrapper input:focus
+{
+  background-color: transparent;
+  border-color: transparent;
+  color: white;
+  outline: none;
 }
 
 .account-details-edit {
@@ -1103,14 +1116,20 @@ body {
   margin: 0;
 }
 
-.pw-rules p{
-  text-align: left;
-  margin: 0.10em;
-}
 
 .pw-rules #title {
   font-weight: bold;
   text-align: center;
+}
+
+.pw-rules div {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.pw-rules p{
+  text-align: left;
+  margin: 0.3em;
 }
 
 .movie-name-span {
@@ -1181,6 +1200,11 @@ body {
   color: white;
   text-align: center;
   height: 60vh;
+}
+
+.error-message {
+  color: var(--warning-color);
+  text-align: center;
 }
 
 @media (max-width: 1120px) {

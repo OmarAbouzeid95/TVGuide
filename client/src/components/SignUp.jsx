@@ -23,7 +23,7 @@ export default function SignUp(props){
         const isAlpha = str => /^[a-zA-Z]*$/.test(str);
         const isPassword = str => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(str)
         if (!isAlpha(userInfo.firstName) || userInfo.firstName.trim(' ') === ''){
-            setSignUpStatus('Enter a valid First name')
+            setSignUpStatus('Enter a valid first name')
             setShowLoader(false)
         }else if(!isAlpha(userInfo.lastName) || userInfo.lastName.trim(' ') === ''){
             setSignUpStatus('Enter a valid last name')  
@@ -34,12 +34,14 @@ export default function SignUp(props){
         }
         else if(!isPassword(userInfo.password)){
             setSignUpStatus(<div className="pw-rules">
-                                <p id="title">Password needs to match these rules: </p>
-                                <p>- Minimum eight characters</p>
-                                <p>- At least one uppercase letter</p>
-                                <p>- At least one lowercase letter</p>
-                                <p>- One number</p>
-                                <p>- One special character</p>
+                                <div>
+                                    <p id="title">Password needs to match these rules: </p>
+                                    <p>- Minimum eight characters</p>
+                                    <p>- At least one uppercase letter</p>
+                                    <p>- At least one lowercase letter</p>
+                                    <p>- One number</p>
+                                    <p>- One special character</p>
+                                </div>
                             </div>)  
             setShowLoader(false)           
         }else if(userInfo.password !== userInfo.repassword){

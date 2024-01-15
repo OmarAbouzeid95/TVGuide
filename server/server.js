@@ -157,7 +157,7 @@ app.patch('/user/update', async (req, res) => {
 
     try{
         const { email, updates } = req.body;
-        const updatedUser = await User.findOneAndUpdate({email}, {$set: {updates}}, {new: true});
+        const updatedUser = await User.findOneAndUpdate({email}, {$set: updates}, {new: true});
         res.status(200).json(updatedUser);
     } catch(err) {
         res.status(500).json({error: err}); 

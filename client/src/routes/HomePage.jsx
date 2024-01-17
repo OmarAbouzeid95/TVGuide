@@ -12,6 +12,8 @@ const HomePage = () => {
     const { entertainmentData, setEntertainmentData } = useContext(entertainmentContext);
     const { mode } = useContext(modeContext);
     const [ allResults, setAllResults ] = useState();
+    const [ windowSize, setWindowSize ] = useState(window.innerWidth);
+
 
     const fetchEntertainmentContent = async () => {
 
@@ -122,6 +124,13 @@ const HomePage = () => {
         return entertainmentContent;
     };
 
+    // screen resize listener
+    useEffect(() => {
+        const adjustWindowSize = () => setWindowSize(window.innerWidth);
+        window.addEventListener('resize', adjustWindowSize);
+        return () => window.removeEventListener('resize', adjustWindowSize);
+    }, []);
+
     useEffect(() => {
         /*
         res = await fetching movies and tv by genre to display on the homepage
@@ -154,27 +163,31 @@ const HomePage = () => {
         const responsive = {
             superLargeDesktop: {
               breakpoint: { max: 4000, min: 1360 },
-              items: 7
+              items: 7,
+              slidesToSlide: 7
             },
             largeDesktop: {
                 breakpoint: { max: 1359, min: 1120 },
-                items: 6
+                items: 6,
+                slidesToSlide: 6
             },
             desktop: {
               breakpoint: { max: 1119, min: 1024 },
-              items: 5
+              items: 5,
+              slidesToSlide: 5
             },
             tablet: {
               breakpoint: { max: 1023, min: 769 },
-              items: 4
+              items: 4,
+              slidesToSlide: 4
             },
             largeMobile: {
               breakpoint: { max: 768, min: 426 },
-              items: 3
+              items: 3,
             },
             mobile: {
               breakpoint: { max: 425, min: 0 },
-              items: 2
+              items: 2,
             }
           };
 
@@ -182,13 +195,14 @@ const HomePage = () => {
             <div key={title}>
                 <h2 className="genre-header">{title.charAt(0).toUpperCase() + title.slice(1)}</h2>
                 <Carousel 
-                    responsive={responsive}
-                    infinite={true}
-                    swipeable={true}
-                    draggable={true}
+                responsive={responsive}
+                infinite={true}
+                swipeable={true}
+                draggable={false}
+                arrows={(windowSize > 426)}
                 >
                     {list}
-                </Carousel>
+                </Carousel> 
             </div>
         );
     };

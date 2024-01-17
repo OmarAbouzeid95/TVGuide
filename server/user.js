@@ -21,6 +21,11 @@ const userSchema = Schema({
         type: String,
         required: true
     },
+    type:{
+        type: String,
+        enum: ['user', 'admin'],
+        required: true
+    },
     watchList: {
         type: Array,
         required: true

@@ -39,7 +39,7 @@ export default function Header(){
         }
         window.addEventListener("resize", ()=>{
             setWidth(window.innerWidth)})
-        if(width < 769){
+        if(width < 961){
             setHeaderData(
             <div className="search-nav-icon-container">
                 <div className="header-search-container">
@@ -81,7 +81,7 @@ export default function Header(){
                 <div className="header-nav">
                     <Link className="main-logo-link" to={'/'}>
                         <div className="main-logo">
-                            <img className="logo-img" src={logo} alt="website logo"></img>
+                            {(width > 426) && <img className="logo-img" src={logo} alt="website logo"></img>}
                             <h2>WatchFlex</h2>
                         </div>
                     </Link>

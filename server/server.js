@@ -6,7 +6,6 @@ require('dotenv').config();
 const Movie = require('./movie');
 const User = require('./user');
 const { connectToDb } = require('./db');
-const { findOneAndUpdate } = require('./movie');
 const app = express();
 
 
@@ -36,7 +35,7 @@ app.post('/signIn', async (req, res) => {
 // creating a new user
 app.post('/signUp', async (req, res) => {
 
-    const userData = {...req.body, watchlist: []};
+    const userData = {...req.body, watchlist: [], type: 'user'};
     try {
         const newUser = new User(userData);
         await newUser.save();
@@ -145,6 +144,11 @@ app.patch('/movies/update', async (req, res) => {
 app.delete('/user/delete', async (req, res) => {
 
     try {
+        const { type } = await User.findOne({email: req.body.email});
+        if(type === 'admin') {
+            res.status(200).json({denied: 'Can\'t delete an admin account'});
+            return;
+        }
         const deletedUser = await User.deleteOne({email: req.body.email});
         res.status(200).json(deletedUser);
     } catch(err) {

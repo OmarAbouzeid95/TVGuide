@@ -127,7 +127,7 @@ const AccountDetails = () => {
                     title={modalContentRef.current.title}
                     modalMessage={modalContentRef.current.modalMessage}
                     component={updateComponent({...updateContentRef.current, errorMessage})}
-                    submitMessage={'Save changes'}
+                    submitMessage={'Save'}
                     cancelMessage={'Cancel'}
                 />}
                 <h3>Account Details</h3>

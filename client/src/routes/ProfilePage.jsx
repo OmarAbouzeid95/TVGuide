@@ -28,7 +28,11 @@ const ProfilePage = () => {
         const deletedUser = await deleteUser(userData?.email);
         if(deletedUser?.deletedCount > 0) {
             handleSignOut('Account deleted');
-        } else {
+        } else if(deletedUser?.denied) {
+            toast.error('Can\'t delete an admin account', toastOptions);
+            setShowModal(false);
+        } 
+        else {
             toast.error('Something went wrong!', toastOptions);
         }
     };
@@ -56,7 +60,7 @@ const ProfilePage = () => {
                     title={'Account deletion confirmation'}
                     modalMessage={'Are you sure you want to permanently delete your account?'}
                 />}
-                <h2>{userData?.firstName} {userData?.lastName}</h2>
+                <h2 className="profile-links-header">{userData?.firstName} {userData?.lastName}</h2>
                 <Link className="profile-link" to={'/profile/account-details'}><FontAwesomeIcon icon={faUser} className="profile-link-icon"/>Account Details</Link>
                 <Link className="profile-link" to={'/profile/privacy'}><FontAwesomeIcon icon={faShieldHalved} className="profile-link-icon"/>Privacy Policy</Link>
                 <Link className="profile-link" to={'/profile/user-reviews'}><FontAwesomeIcon icon={faComment} className="profile-link-icon"/>Your Reviews</Link>

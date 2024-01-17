@@ -241,14 +241,14 @@ body {
   padding: 1.5em 0;
 }
 
+.movieList-container::-webkit-scrollbar {
+  height: 15px;
+}
+
 @media (max-width: 550px){
   /* .movieList-container{
     padding-left: 0.75em;
   } */
-}
-.movieList-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
 }
 
 .rightIcon-wrapper, .leftIcon-wrapper {
@@ -329,6 +329,31 @@ body {
   height: 266.35px;
   align-self: center;
 }
+
+/* scroll bars */
+
+/* Customizes the whole scrollbar */
+::-webkit-scrollbar {
+  width: 14px; /* Adjust the width of the scrollbar */
+}
+
+/* Customizes the background of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #2e2e2e; /* Dark grey track */
+}
+
+/* Customizes the scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background-color: #555; /* Darker grey handle */
+  border-radius: 6px; /* Optional: Rounds the corners */
+  border: 3px solid #2e2e2e; /* Same color as track to make the corners appear rounded */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Slightly lighter grey handle on hover */
+}
+
 
 
 /* @media (max-width: 1060px){
@@ -453,6 +478,13 @@ body {
 
 .modal-cancel-btn {
   background-color: var(--warning-color);
+}
+
+@media(max-width: 425px) {
+  .modal-content {
+    padding: 1em;
+    font-size: 0.8rem;
+  }
 }
 
 
@@ -642,10 +674,6 @@ body {
 .movieDetails-title-img {
   position: relative;
   display: flex;
-}
-
-.user-review-container {
-  border-bottom: 1px solid var(--secondary-color);
 }
 
 .movie-poster-dt {
@@ -896,6 +924,12 @@ body {
   overflow-y: scroll;
 }
 
+.profile-outlet::-webkit-scrollbar,
+.policy-outlet::-webkit-scrollbar,
+.reviews-outlet::-webkit-scrollbar {
+  display: none;
+}
+
 .profile-outlet-content,
 .policy-outlet-content,
 .reviews-outlet-content {
@@ -910,6 +944,20 @@ body {
   display: flex;
   padding-bottom: 1em;
   width: 100%;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+@media(max-width: 425px) {
+  .user-review-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5em;
+  }
+
+  .user-review-info h3 {
+    text-align: center;
+  }
 }
 
 .user-review-info h3 {
@@ -949,11 +997,14 @@ body {
   color: white;
 }
 
+.profile-links-header {
+  font-size: 1.3rem;
+}
 
 .profile-link, .profile-link-btn {
   margin-top: 1em;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
   text-decoration: none;
   white-space: nowrap;
@@ -970,6 +1021,21 @@ body {
   cursor: pointer;
 }
 
+@media(max-width: 850px) {
+  .profile-links-wrapper {
+    padding-top: 4em;
+  }
+
+  .profile-links-header {
+    font-size: 1.1rem;
+  }
+
+  .profile-link, .profile-link-btn {
+    font-size: 0.9rem;
+  }
+}
+
+
 .profile-link-icon {
   margin-right: 0.5em;
 }
@@ -978,9 +1044,12 @@ body {
 
   .profile-links-wrapper {
     flex-direction: row;
-    justify-content: center;
     align-items: center;
     overflow-x: scroll;
+  }
+
+  .profile-links-wrapper::-webkit-scrollbar {
+    display: none;
   }
 
   .profile-wrapper {
@@ -993,8 +1062,12 @@ body {
     padding-top: 2.5em;
   }
 
+  .profile-link:nth-of-type(1) {
+    margin-left: -3.5em;
+  }
+
   .profile-outlet, .policy-outlet, .reviews-outlet {
-    padding: 1em 2em;
+    padding: 1em 0;
   }
 
   .profile-links-wrapper h2 {
@@ -1009,10 +1082,18 @@ body {
     font-size: 0.8rem;
   }
 
+  
+
   .profile-link-icon {
     display: none;
   }
 
+}
+
+@media(max-width: 425px) {
+  .profile-wrapper {
+    max-width: 425px;
+  }
 }
 
 /* Account details */
@@ -1268,6 +1349,12 @@ body {
   
 }
 
+@media(max-width: 961px) {
+  .header-nav-buttons {
+    display: none;
+  }
+}
+
 @media (max-width: 825px) {
   .header-nav-buttons {
     width: 50%;
@@ -1278,9 +1365,6 @@ body {
 }
 
 @media(max-width: 768px) {
-  .header-nav-buttons {
-    display: none;
-  }
   .movies-container-wrapper, .movies-container {
     max-width: 580px;
   }

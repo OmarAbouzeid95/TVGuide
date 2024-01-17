@@ -896,10 +896,6 @@ body {
   overflow-y: scroll;
 }
 
-.profile-outlet {
-  position: relative;
-}
-
 .profile-outlet-content,
 .policy-outlet-content,
 .reviews-outlet-content {
@@ -976,6 +972,47 @@ body {
 
 .profile-link-icon {
   margin-right: 0.5em;
+}
+
+@media(max-width: 625px) {
+
+  .profile-links-wrapper {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow-x: scroll;
+  }
+
+  .profile-wrapper {
+    flex-direction: column;
+    margin: 0 2em;
+  }
+
+  .profile-links-wrapper {
+    background-color: transparent;
+    padding-top: 2.5em;
+  }
+
+  .profile-outlet, .policy-outlet, .reviews-outlet {
+    padding: 1em 2em;
+  }
+
+  .profile-links-wrapper h2 {
+    display: none;
+  }
+
+  .profile-link, .profile-link-btn {
+    background-color: #22252e;
+    border-radius: 3em;
+    margin: 0 1em 0 0;
+    padding: 0.5em 1em;
+    font-size: 0.8rem;
+  }
+
+  .profile-link-icon {
+    display: none;
+  }
+
 }
 
 /* Account details */

@@ -193,10 +193,9 @@ export default function SignUp(props) {
             e.preventDefault();
             signUp();
           }}>
-          {showLoader ? <Loader /> : "Sign up"}
+          {showLoader ? <Loader size="20" /> : "Sign up"}
         </button>
       </form>
-      {showLoader && <Loader />}
       <p className="form-account-msg">
         Already have an account? <Link to={"/signin"}>Sign in</Link>
       </p>

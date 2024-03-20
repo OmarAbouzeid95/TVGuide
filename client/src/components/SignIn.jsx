@@ -95,14 +95,14 @@ export default function SignIn() {
         </div>
         <button
           disabled={showLoader}
+          className="cta-button"
           onClick={(e) => {
             e.preventDefault();
             signIn();
           }}>
-          {showLoader ? <Loader /> : "Sign in"}
+          {showLoader ? <Loader size="20" /> : "Sign in"}
         </button>
       </form>
-      {/* {showLoader && <Loader />} */}
       <p className="form-account-msg">
         Don't have an account?{" "}
         <Link to={"/signup"} state={{ pathname }}>

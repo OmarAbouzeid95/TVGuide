@@ -988,18 +988,6 @@ body {
   margin-bottom: 0.1em;
 }
 
-.user-review-info button {
-  background-color: transparent;
-  border: none;
-  text-decoration: underline;
-  color: white;
-  font-size: 1rem;
-}
-
-.user-review-info button:hover {
-  cursor: pointer;
-}
-
 .policy-outlet-content {
   line-height: 25px;
 }
@@ -1384,14 +1372,23 @@ body {
   text-align: center;
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1374px) {
+  .movies-container-wrapper {
+    max-width: 1175px;
+  }
+}
+
+@media (max-width: 1175px) {
   .header-search-nav-container {
     width: 50%;
   }
-  .movies-container {
-    max-width: 980px;
-  }
+  .movies-container,
   .movies-container-wrapper {
+    max-width: 780px;
+  }
+}
+@media (max-width: 1120px) {
+  .movies-carousel-wrapper {
     max-width: 980px;
   }
 }
@@ -1421,9 +1418,14 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   .movies-container-wrapper,
   .movies-container {
+    max-width: 600px;
+  }
+}
+@media (max-width: 768px) {
+  .movies-carousel-wrapper {
     max-width: 580px;
   }
 }
@@ -1444,12 +1446,17 @@ body {
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 600px) {
   .movieDetails-title-img {
     flex-direction: column;
   }
   .movies-container-wrapper,
   .movies-container {
+    max-width: 400px;
+  }
+}
+@media (max-width: 425px) {
+  .movies-carousel-wrapper {
     max-width: 400px;
   }
 }

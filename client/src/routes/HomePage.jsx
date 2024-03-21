@@ -225,10 +225,10 @@ const HomePage = () => {
   };
 
   return (
-    <div className="movies-container-wrapper">
+    <div className="movies-carousel-wrapper">
       {allResults ?? (
         <div className="loader-container">
-          <Loader size="90" />
+          <Loader size="50" />
         </div>
       )}
     </div>

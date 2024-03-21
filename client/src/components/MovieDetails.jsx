@@ -35,8 +35,6 @@ import { updateUser } from "../functions/userFunctions";
 import { toast } from "react-toastify";
 
 export default function MovieDetails() {
-  const label = { inputProps: { "aria-label": "Switch demo" } };
-  const [rating, setRating] = useState(false);
   const [stars, setStars] = useState(0);
   const [review, setReview] = useState("");
   const [currentRating, setCurrentRating] = useState(0);
@@ -87,14 +85,16 @@ export default function MovieDetails() {
 
   // updating the rating
   useEffect(() => {
-    if (!userData) {
-      navigate("/signin", {
-        state: {
-          pathname: location.pathname,
-        },
-      });
-    } else {
-      updateMovieDetails();
+    if (stars !== 0) {
+      if (!userData) {
+        navigate("/signin", {
+          state: {
+            pathname: location.pathname,
+          },
+        });
+      } else {
+        updateMovieDetails();
+      }
     }
   }, [stars]);
 

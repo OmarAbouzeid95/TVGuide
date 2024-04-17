@@ -65,25 +65,25 @@ export default function BasicMenu() {
           "aria-labelledby": "basic-button",
         }}>
         <MenuItem onClick={handleClose}>
-          <Link className=" " to={`/popular/${mode}`}>
+          <Link className="dropdown-link" to={`/popular/${mode}`}>
             Popular
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link className=" " to={`/top-rated/${mode}`}>
+          <Link className="dropdown-link" to={`/top-rated/${mode}`}>
             Top Rated
           </Link>
         </MenuItem>
         {mode === "movie" && (
           <MenuItem onClick={handleClose}>
             {" "}
-            <Link className=" " to={`/upcoming/${mode}`}>
+            <Link className="dropdown-link" to={`/upcoming/${mode}`}>
               Upcoming
             </Link>
           </MenuItem>
         )}
         <MenuItem onClick={handleClose}>
-          <Link className=" " to={"/trending"}>
+          <Link className="dropdown-link" to={"/trending"}>
             Trending
           </Link>
         </MenuItem>

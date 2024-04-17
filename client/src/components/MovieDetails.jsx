@@ -325,18 +325,25 @@ export default function MovieDetails() {
                 <Typography component="legend" style={{ color: "white" }}>
                   Rate
                 </Typography>
-                <Rating
-                  name="simple-controlled"
-                  value={stars}
-                  size="medium"
-                  max={10}
-                  emptyIcon={
-                    <StarIcon style={{ opacity: 0.5, color: "white" }} />
-                  }
-                  onChange={(event, newValue) => {
-                    setStars(newValue);
-                  }}
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}>
+                  <Rating
+                    name="simple-controlled"
+                    value={stars}
+                    size="medium"
+                    max={10}
+                    emptyIcon={
+                      <StarIcon style={{ opacity: 0.5, color: "white" }} />
+                    }
+                    onChange={(event, newValue) => {
+                      setStars(newValue);
+                    }}
+                  />
+                </div>
               </div>
               {watchList.some((movie) => movie.id === id) ? (
                 <Button
@@ -369,7 +376,7 @@ export default function MovieDetails() {
           <div className="movieDetails-video">
             {/*eslint-disable-next-line jsx-a11y/iframe-has-title*/}
             <iframe
-              width="750"
+              width="100%"
               height="450"
               src={video}
               title="YouTube video player"

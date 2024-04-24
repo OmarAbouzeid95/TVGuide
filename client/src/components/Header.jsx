@@ -18,6 +18,8 @@ import {
   faUser,
   faCalendarDays,
   faClapperboard,
+  faMagnifyingGlass,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
@@ -181,17 +183,29 @@ export default function Header() {
                 />
                 <div className="searchbar-icons">
                   {text !== "" && (
-                    <img
+                    // <img
+                    //   className="clear-icon"
+                    //   src={closeIcon}
+                    //   alt="clear icon"
+                    //   onClick={() => setText("")}></img>
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      size="lg"
+                      color="white"
                       className="clear-icon"
-                      src={closeIcon}
-                      alt="clear icon"
-                      onClick={() => setText("")}></img>
+                      onClick={() => setText("")}
+                    />
                   )}
-                  <img
+                  {/* <img
                     className="search-icon"
                     src={magnifyingGlass}
                     alt="search icon"
                     onClick={() => searchTextTerm({ key: "Enter" })}
+                  /> */}
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    onClick={() => searchTextTerm({ key: "Enter" })}
+                    className="search-icon"
                   />
                 </div>
               </div>

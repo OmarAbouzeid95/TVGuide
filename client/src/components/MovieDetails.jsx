@@ -20,7 +20,12 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarIcon from "@mui/icons-material/Star";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faTrash,
+  faStar,
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { userContext } from "../contexts/contexts";
@@ -401,7 +406,7 @@ export default function MovieDetails() {
                   if (e.repeat) return;
                 }
               }}></textarea>
-            <img
+            {/* <img
               src={send}
               alt="submit review icon"
               className="submitReview-btn"
@@ -409,6 +414,16 @@ export default function MovieDetails() {
                 updateMovieDetails();
                 addUserReview();
               }}
+            /> */}
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              className="submitReview-btn"
+              onClick={() => {
+                updateMovieDetails();
+                addUserReview();
+              }}
+              color="white"
+              size="xl"
             />
           </div>
           {allReviews}

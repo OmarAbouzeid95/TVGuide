@@ -116,7 +116,7 @@ body {
 .header-nav-button {
   padding: 0.5em 1em;
   font-weight: bold;
-  background-color: #0e1013;
+  background-color: transparent;
   color: white;
   text-decoration: none;
   font-size: 0.9rem;
@@ -197,11 +197,9 @@ body {
 }
 
 .clear-icon {
-  max-width: 30px;
+  /* max-width: 30px; */
   position: absolute;
-  right: 35px;
-  filter: invert(99%) sepia(0%) saturate(3667%) hue-rotate(206deg)
-    brightness(116%) contrast(97%);
+  right: 30px;
 }
 .clear-icon:hover {
   cursor: pointer;
@@ -209,7 +207,7 @@ body {
 
 .search-icon {
   position: absolute;
-  width: 18px;
+  /* width: 19px; */
   right: 10px;
   bottom: 8px;
   filter: invert(99%) sepia(0%) saturate(3667%) hue-rotate(206deg)
@@ -945,11 +943,11 @@ body {
 .submitReview-btn,
 .deleteReview-btn {
   position: absolute;
-  bottom: 7px;
-  right: 7px;
-  width: 25px;
-  filter: invert(99%) sepia(0%) saturate(3667%) hue-rotate(206deg)
-    brightness(116%) contrast(97%);
+  bottom: 13px;
+  right: 13px;
+  /* width: 25px; */
+  /* filter: invert(99%) sepia(0%) saturate(3667%) hue-rotate(206deg)
+    brightness(116%) contrast(97%); */
 }
 
 .submitReview-btn:hover,

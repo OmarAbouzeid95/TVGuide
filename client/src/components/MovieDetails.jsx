@@ -18,6 +18,7 @@ import Typography from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarIcon from "@mui/icons-material/Star";
+import { styled } from "@mui/material";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -296,6 +297,24 @@ export default function MovieDetails() {
     setReview("");
   }
 
+  const WatchlistButton = styled(Button)({
+    border: "1px solid white",
+    fontFamily: "Montserrat, sans-serif",
+    color: "white",
+    textTransform: "capitalize",
+    fontSize: "1rem",
+    padding: "1em 1.5em",
+  });
+
+  const CustomRating = styled(Rating)({
+    border: "1px solid white",
+    fontFamily: "Montserrat, sans-serif",
+    padding: "1em 1.5em",
+    textTransform: "capitalize",
+    color: "white",
+    fontSize: "1rem",
+  });
+
   return (
     <div>
       <div className="movieDetails-container">
@@ -327,51 +346,35 @@ export default function MovieDetails() {
             <p className="movie-date">{release_date}</p>
             <div className="movieDetails-btns">
               <div className="watchlist-btn">
-                <Typography component="legend" style={{ color: "white" }}>
-                  Rate
-                </Typography>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}>
-                  <Rating
-                    name="simple-controlled"
-                    value={stars}
-                    size="medium"
-                    max={10}
-                    emptyIcon={
-                      <StarIcon style={{ opacity: 0.5, color: "white" }} />
-                    }
-                    onChange={(event, newValue) => {
-                      setStars(newValue);
-                    }}
-                  />
-                </div>
+                <Rating
+                  name="simple-controlled"
+                  value={stars}
+                  size="medium"
+                  max={10}
+                  emptyIcon={
+                    <StarIcon style={{ opacity: 0.5, color: "white" }} />
+                  }
+                  onChange={(event, newValue) => {
+                    setStars(newValue);
+                  }}
+                />
               </div>
               {watchList.some((movie) => movie.id === id) ? (
-                <Button
-                  variant="outlined"
-                  onClick={() => updateList("remove")}
-                  style={{ color: "white" }}>
+                <WatchlistButton onClick={() => updateList("remove")}>
                   <FontAwesomeIcon
                     icon={faTrash}
                     style={{ marginRight: "0.5em" }}
                   />
                   Remove from watchlist
-                </Button>
+                </WatchlistButton>
               ) : (
-                <Button
-                  variant="outlined"
-                  onClick={() => updateList("add")}
-                  style={{ color: "white" }}>
+                <WatchlistButton onClick={() => updateList("add")}>
                   <FontAwesomeIcon
                     icon={faPlus}
                     style={{ marginRight: "0.5em" }}
                   />
-                  Add to watchlist
-                </Button>
+                  Add to watchList
+                </WatchlistButton>
               )}
             </div>
           </div>

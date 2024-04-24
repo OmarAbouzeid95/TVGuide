@@ -1,15 +1,11 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; */
+  font-family: Montserrat, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 * {
@@ -131,9 +127,7 @@ body {
   color: white;
   margin-left: 1em;
   text-transform: none;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: Montserrat, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 0.9rem;
@@ -181,6 +175,7 @@ body {
 .reviewInput-field {
   width: 100%;
   padding: 0.35em 3.5em 0.35em 0;
+  font-family: Montserrat, sans-serif;
   font-size: 1em;
   background-color: transparent;
   color: white;
@@ -796,9 +791,28 @@ body {
 
 .watchlist-btn {
   margin-right: 1em;
-  border: 1px solid rgba(25, 118, 210, 0.5);
+  border: 1px solid white;
   border-radius: 4px;
-  padding: 0 0.5em;
+  padding: 0.25em 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .watchlist-btn {
+    padding: 1.2em 1.5em;
+    margin: 0;
+  }
+  .movieDetails-btns {
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 1em;
+  }
+  .movieDetails-btns button {
+    text-align: center;
+  }
 }
 
 .rating-btn {
@@ -812,24 +826,6 @@ body {
   align-items: center;
   border-radius: 0.35em;
   border: 1px solid white;
-}
-
-@media (max-width: 600px) {
-  .movieDetails-btns {
-    flex-direction: column;
-    justify-content: center;
-    /* align-items: center; */
-    gap: 1em;
-  }
-
-  .movieDetails-btns button {
-    /* min-width: 100%; */
-    text-align: center;
-  }
-
-  .watchlist-btn {
-    margin: 0;
-  }
 }
 
 @media (max-width: 375px) {
@@ -933,9 +929,7 @@ body {
 .reviewInput-field {
   width: 100%;
   padding: 0.25em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: Montserrat, sans-serif;
   color: white;
   border-radius: 4px;
 }
@@ -1634,7 +1628,7 @@ body {
   position: relative;
   color: #fff;
   transition: all 200ms linear;
-  font-family: "Roboto", sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 500;
   font-size: 15px;
   border-radius: 2px;

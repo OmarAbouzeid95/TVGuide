@@ -27,6 +27,7 @@ import { modeContext } from "../contexts/contexts";
 // export default Dropdown;
 
 import { useState } from "react";
+import { styled } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -41,6 +42,9 @@ export default function BasicMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const StyledMenuItem = styled(MenuItem)({
+    fontFamily: "Montserrat, sans-serif",
+  });
 
   return (
     <div>
@@ -64,29 +68,29 @@ export default function BasicMenu() {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}>
-        <MenuItem onClick={handleClose}>
+        <StyledMenuItem onClick={handleClose}>
           <Link className="dropdown-link" to={`/popular/${mode}`}>
             Popular
           </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
+        </StyledMenuItem>
+        <StyledMenuItem onClick={handleClose}>
           <Link className="dropdown-link" to={`/top-rated/${mode}`}>
             Top Rated
           </Link>
-        </MenuItem>
+        </StyledMenuItem>
         {mode === "movie" && (
-          <MenuItem onClick={handleClose}>
+          <StyledMenuItem onClick={handleClose}>
             {" "}
             <Link className="dropdown-link" to={`/upcoming/${mode}`}>
               Upcoming
             </Link>
-          </MenuItem>
+          </StyledMenuItem>
         )}
-        <MenuItem onClick={handleClose}>
+        <StyledMenuItem onClick={handleClose}>
           <Link className="dropdown-link" to={"/trending"}>
             Trending
           </Link>
-        </MenuItem>
+        </StyledMenuItem>
       </Menu>
     </div>
   );

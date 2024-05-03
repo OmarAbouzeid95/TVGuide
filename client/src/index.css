@@ -1408,6 +1408,13 @@ body {
     max-width: 780px;
   }
 }
+
+@media (min-width: 1200px) and (max-width: 1360px) {
+  .movies-carousel-wrapper {
+    padding-left: 0.75em;
+  }
+}
+
 @media (max-width: 1120px) {
   .movies-carousel-wrapper {
     max-width: 980px;
@@ -1835,13 +1842,13 @@ body {
 /* material UI */
 
 .MuiMenu-list {
-  background-color: #3b3b3b;
+  background-color: rgba(20, 22, 27, 0.8);
   /* background-opacity: 0.7; */
 }
 
 .MuiMenu-list li:hover {
   /* background-opacity: 0.2; */
-  background-color: rgba(59, 59, 59, 0.2);
+  background-color: rgba(20, 22, 27, 0.5);
 }
 
 .dropdown-link {
@@ -1852,4 +1859,8 @@ body {
 
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
   text-transform: lowercase;
+}
+
+.MuiMenu-menuItem {
+  background-color: purple;
 }
